@@ -32,7 +32,7 @@
                 <div class="text-right min-w-[140px]">
                     <div class="flex justify-between text-[10px] text-white/90">
                         <span>Target Sales:</span>
-                        <span id="target-goal-text" class="font-bold text-amber-200">Rp 100.000</span>
+                        <span id="target-goal-text" class="font-bold text-amber-200">Rp 0</span>
                     </div>
                     <div class="w-full bg-red-950/60 h-2 rounded-full overflow-hidden p-0.5 mt-0.5 border border-white/30">
                         <div id="target-progress-bar" class="bg-amber-300 h-full rounded-full transition-all duration-300 w-0"></div>
@@ -103,7 +103,7 @@
             <!-- Queue Counter -->
             <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl flex items-center justify-between text-xs font-bold shadow-lg">
                 <span class="text-slate-400"><i class="fa-solid fa-users text-red-500 mr-2"></i>Antrean Pelanggan:</span>
-                <span id="queue-remaining-badge" class="bg-red-600/20 text-red-300 border border-red-500/40 px-3 py-1 rounded-full">9 Orang Menunggu</span>
+                <span id="queue-remaining-badge" class="bg-red-600/20 text-red-300 border border-red-500/40 px-3 py-1 rounded-full">0 Orang Menunggu</span>
             </div>
 
         </div>
@@ -229,27 +229,27 @@
             <div class="space-y-2">
                 <h2 id="modal-title" class="text-2xl font-black text-white">Koperasi Dash</h2>
                 <p id="modal-subtitle" class="text-xs text-slate-400 leading-relaxed">
-                    Capai target omset Koperasi sebesar <strong class="text-amber-300">Rp 100.000</strong>! Melayani transaksi produk cafe, makanan hangat, dan belanjaan harian dengan cepat dan akurat.
+                    Sistem akan mengacak target omset dan jumlah antrean pelanggan setiap kali shift dimulai.
                 </p>
             </div>
 
-            <div id="modal-stats" class="hidden bg-slate-950 p-4 rounded-2xl border border-slate-800 text-xs space-y-2 text-left">
-                <div class="flex justify-between"><span class="text-slate-400">Pencapaian Omset Kas:</span><span id="final-score" class="font-bold text-amber-300">Rp 0</span></div>
-                <div class="flex justify-between"><span class="text-slate-400">Target Omset Shift:</span><span class="font-bold text-slate-300">Rp 100.000</span></div>
-                <div class="flex justify-between"><span class="text-slate-400">Pelanggan Terlayani:</span><span id="final-cust" class="font-bold text-emerald-400">0 Orang</span></div>
+            <div id="modal-stats" class="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-xs space-y-2 text-left">
+                <div class="flex justify-between"><span class="text-slate-400">Target Omset Shift Ini:</span><span id="modal-target-goal" class="font-bold text-amber-300">Rp 0</span></div>
+                <div class="flex justify-between"><span class="text-slate-400">Total Antrean Pelanggan:</span><span id="modal-cust-target" class="font-bold text-emerald-400">0 Orang</span></div>
+                <div id="modal-last-score-row" class="hidden flex justify-between border-t border-slate-800 pt-2"><span class="text-slate-400">Omset Terakhir Didapat:</span><span id="final-score" class="font-bold text-emerald-400">Rp 0</span></div>
             </div>
 
             <button onclick="startGame()" class="w-full py-3.5 bg-red-600 hover:bg-red-500 text-white font-black text-sm rounded-2xl shadow-xl transition transform active:scale-95 flex items-center justify-center space-x-2">
                 <i class="fa-solid fa-play"></i>
-                <span id="modal-btn-text">Mulai Shift Koperasi</span>
+                <span id="modal-btn-text">Mulai Shift Koperasi Baru</span>
             </button>
         </div>
     </div>
 
     <!-- JAVASCRIPT GAME LOGIC -->
     <script>
-        const TARGET_SALES_GOAL = 100000; // Target Sales Rp 100.000
-        const TARGET_CUSTOMERS_PER_SHIFT = 10; // 10 Pelanggan per Shift
+        let targetSalesGoal = 150000;
+        let targetCustomersPerShift = 12;
 
         // Database Produk Ritel Modern & RTE (FamilyMart Style)
         const ITEM_DATABASE = [
@@ -332,10 +332,17 @@
             totalScore = 0;
             customerIndex = 0;
             reputation = 3;
-            queueList = [...CUSTOMER_PRESETS].sort(() => 0.5 - Math.random()).slice(0, TARGET_CUSTOMERS_PER_SHIFT);
+
+            // DYNAMIC TARGET SALES: Acak antara Rp 120.000 - Rp 250.000 (kelipatan 10.000)
+            targetSalesGoal = (Math.floor(Math.random() * 14) + 12) * 10000;
+            
+            // DYNAMIC CUSTOMER COUNT: Acak antara 12 - 16 pelanggan
+            targetCustomersPerShift = Math.floor(Math.random() * 5) + 12;
+
+            queueList = [...CUSTOMER_PRESETS].sort(() => 0.5 - Math.random()).slice(0, targetCustomersPerShift);
 
             document.getElementById('game-score').innerText = 'Rp 0';
-            document.getElementById('target-goal-text').innerText = `Rp ${TARGET_SALES_GOAL.toLocaleString('id-ID')}`;
+            document.getElementById('target-goal-text').innerText = `Rp ${targetSalesGoal.toLocaleString('id-ID')}`;
             updateTargetProgressUI();
             updateReputationUI();
 
@@ -344,8 +351,7 @@
         }
 
         function nextCustomer() {
-            // Check Win/Loss Status before loading next customer
-            if (totalScore >= TARGET_SALES_GOAL || customerIndex >= TARGET_CUSTOMERS_PER_SHIFT || reputation <= 0) {
+            if (totalScore >= targetSalesGoal || customerIndex >= targetCustomersPerShift || reputation <= 0) {
                 endGame();
                 return;
             }
@@ -358,7 +364,8 @@
 
             currentCustomer = queueList[customerIndex];
             
-            const itemQty = Math.floor(Math.random() * 3) + 2;
+            // Randomly select 2 - 5 items
+            const itemQty = Math.floor(Math.random() * 4) + 2;
             currentItems = [];
             for (let i = 0; i < itemQty; i++) {
                 const randomItem = ITEM_DATABASE[Math.floor(Math.random() * ITEM_DATABASE.length)];
@@ -394,7 +401,7 @@
                 document.getElementById('dialogue-text').innerText = `"Tolong hitung cepat ya, saya bayar pakai uang tunai."`;
             }
 
-            document.getElementById('queue-remaining-badge').innerText = `${TARGET_CUSTOMERS_PER_SHIFT - customerIndex - 1} Orang Menunggu`;
+            document.getElementById('queue-remaining-badge').innerText = `${targetCustomersPerShift - customerIndex - 1} Orang Menunggu`;
 
             document.getElementById('member-status-tag').innerText = 'Belum';
             document.getElementById('member-status-tag').className = 'text-[10px] bg-red-500/20 text-red-300 px-2 py-0.5 rounded';
@@ -570,7 +577,7 @@
         }
 
         function updateTargetProgressUI() {
-            const pct = Math.min(100, Math.round((totalScore / TARGET_SALES_GOAL) * 100));
+            const pct = Math.min(100, Math.round((totalScore / targetSalesGoal) * 100));
             document.getElementById('target-progress-bar').style.width = `${pct}%`;
             document.getElementById('target-percent-text').innerText = `${pct}% Target Tercapai`;
         }
@@ -596,14 +603,16 @@
             const icon = document.getElementById('modal-icon');
             const sub = document.getElementById('modal-subtitle');
             
-            document.getElementById('modal-stats').classList.remove('hidden');
+            document.getElementById('modal-last-score-row').classList.remove('hidden');
             document.getElementById('final-score').innerText = `Rp ${totalScore.toLocaleString('id-ID')}`;
-            document.getElementById('final-cust').innerText = `${customerIndex} Pelanggan`;
+            
+            document.getElementById('modal-target-goal').innerText = `Rp ${targetSalesGoal.toLocaleString('id-ID')}`;
+            document.getElementById('modal-cust-target').innerText = `${customerIndex} / ${targetCustomersPerShift} Pelanggan`;
 
-            if (totalScore >= TARGET_SALES_GOAL && reputation > 0) {
+            if (totalScore >= targetSalesGoal && reputation > 0) {
                 title.innerText = 'TARGET OMSET TERCAPAI!';
                 icon.className = 'fa-solid fa-trophy';
-                sub.innerText = 'Selamat! Kamu berhasil melayani pelanggan dan mencapai Target Omset Kas Koperasi Dash!';
+                sub.innerText = 'Selamat! Kamu berhasil melayani pelanggan dan mencapai Target Omset Koperasi Dash!';
                 confetti({ particleCount: 150, spread: 90, origin: { y: 0.5 } });
             } else if (reputation <= 0) {
                 title.innerText = 'SHIFT GAGAL! REPUTASI HABIS';
@@ -612,7 +621,7 @@
             } else {
                 title.innerText = 'TARGET BELUM TERCAPAI';
                 icon.className = 'fa-solid fa-chart-line-down';
-                sub.innerText = `Antrean pelanggan habis, namun omset kas hanya terkumpul Rp ${totalScore.toLocaleString('id-ID')} dari target Rp 100.000. Coba lagi!`;
+                sub.innerText = `Antrean pelanggan habis, namun omset kas hanya terkumpul Rp ${totalScore.toLocaleString('id-ID')} dari target Rp ${targetSalesGoal.toLocaleString('id-ID')}. Coba lagi!`;
             }
 
             document.getElementById('modal-btn-text').innerText = 'Mainkan Shift Baru';
