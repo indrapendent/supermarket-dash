@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Koperasi Dash: Kasir Simulator</title>
+    <title>Supermarket Dash: Kasir Simulator</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -21,7 +21,7 @@
                     <i class="fa-solid fa-cash-register"></i>
                 </div>
                 <div>
-                    <h1 class="text-base font-bold text-white tracking-wide">Koperasi Dash</h1>
+                    <h1 class="text-base font-bold text-white tracking-wide">Supermarket Dash</h1>
                     <p class="text-[11px] text-amber-400 font-medium">Kasir Simulator & Time Management</p>
                 </div>
             </div>
@@ -34,7 +34,7 @@
                 </div>
                 <div class="text-right">
                     <p class="text-[10px] text-slate-400">Pelanggan Selesai</p>
-                    <p id="cust-count" class="text-amber-400 text-sm">0 / 5</p>
+                    <p id="cust-count" class="text-amber-400 text-sm">0 / 8</p>
                 </div>
                 <div class="text-right">
                     <p class="text-[10px] text-slate-400">Reputasi / Nyawa</p>
@@ -91,7 +91,7 @@
             <!-- Queue Counter -->
             <div class="bg-slate-800/80 border border-slate-700 p-4 rounded-2xl flex items-center justify-between text-xs font-bold">
                 <span class="text-slate-400"><i class="fa-solid fa-users text-indigo-400 mr-2"></i>Antrean Dibelakang:</span>
-                <span id="queue-remaining-badge" class="bg-indigo-600/30 text-indigo-300 border border-indigo-500/50 px-3 py-1 rounded-full">4 Orang Menunggu</span>
+                <span id="queue-remaining-badge" class="bg-indigo-600/30 text-indigo-300 border border-indigo-500/50 px-3 py-1 rounded-full">7 Orang Menunggu</span>
             </div>
 
         </div>
@@ -165,13 +165,12 @@
                     <span id="change-display-container" class="text-slate-400">Diambil: <strong id="change-given-val" class="text-emerald-400 text-sm">Rp 0</strong></span>
                 </div>
 
-                <!-- Money Denomination Buttons (Koin & Kertas) -->
+                <!-- Money Denomination Buttons (Koin & Kertas - Terkecil 100 Rupiah) -->
                 <div id="money-buttons-box" class="space-y-2">
-                    <!-- Koin Pecahan Kecil (50, 100, 200, 500) -->
+                    <!-- Koin Pecahan Kecil (100, 200, 500) -->
                     <div class="flex items-center space-x-2">
                         <span class="text-[10px] text-slate-500 font-bold w-12 flex-shrink-0">Koin:</span>
-                        <div class="grid grid-cols-4 gap-2 w-full">
-                            <button onclick="addChange(50)" class="py-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg font-bold text-xs text-amber-300 transition">+50</button>
+                        <div class="grid grid-cols-3 gap-2 w-full">
                             <button onclick="addChange(100)" class="py-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg font-bold text-xs text-amber-300 transition">+100</button>
                             <button onclick="addChange(200)" class="py-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg font-bold text-xs text-amber-300 transition">+200</button>
                             <button onclick="addChange(500)" class="py-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg font-bold text-xs text-amber-300 transition">+500</button>
@@ -216,7 +215,7 @@
             </div>
 
             <div class="space-y-2">
-                <h2 id="modal-title" class="text-2xl font-black text-white">Koperasi Dash</h2>
+                <h2 id="modal-title" class="text-2xl font-black text-white">Supermarket Dash</h2>
                 <p id="modal-subtitle" class="text-xs text-slate-400 leading-relaxed">
                     Uji kecepatan dan ketelitianmu melayani pelanggan di kasir minimarket! Scan barang, diskon member, serta proses pembayaran Tunai, QRIS, atau Kartu Debit.
                 </p>
@@ -236,32 +235,63 @@
 
     <!-- JAVASCRIPT GAME LOGIC -->
     <script>
-        // Database Produk Alfamart / Indomaret
+        // Database 25 Produk Real Minimarket (Dibulatkan ke kelipatan Rp 100)
         const ITEM_DATABASE = [
-            { name: 'Indomie Goreng', price: 3100, icon: 'fa-bowl-food', color: 'bg-red-500' },
+            { name: 'Indomie Goreng Original', price: 3100, icon: 'fa-bowl-food', color: 'bg-red-500' },
             { name: 'Pocari Sweat 500ml', price: 9200, icon: 'fa-bottle-water', color: 'bg-blue-600' },
-            { name: 'Susu Ultra Milk 250ml', price: 7200, icon: 'fa-box-tissue', color: 'bg-amber-700' },
+            { name: 'Ultra Milk Cokelat 250ml', price: 7200, icon: 'fa-box-tissue', color: 'bg-amber-700' },
             { name: 'Chitato Sapi Panggang', price: 12500, icon: 'fa-cookie-bite', color: 'bg-orange-600' },
-            { name: 'Silverqueen Chocolate', price: 16500, icon: 'fa-candy-cane', color: 'bg-amber-800' },
-            { name: 'Teh Pucuk Harum', price: 4000, icon: 'fa-wine-bottle', color: 'bg-emerald-600' },
-            { name: 'Aqua 600ml', price: 3800, icon: 'fa-bottle-water', color: 'bg-blue-400' },
-            { name: 'Roti O / Roti Aoka', price: 4500, icon: 'fa-bread-slice', color: 'bg-yellow-600' },
-            { name: 'Minyak Goreng 2L', price: 38500, icon: 'fa-bottle-droplet', color: 'bg-yellow-500' },
-            { name: 'Tissue Paseo 250s', price: 18900, icon: 'fa-box-tissue', color: 'bg-pink-400' }
+            { name: 'Silverqueen Milk Choco', price: 16500, icon: 'fa-candy-cane', color: 'bg-amber-800' },
+            { name: 'Teh Pucuk Harum 350ml', price: 4000, icon: 'fa-wine-bottle', color: 'bg-emerald-600' },
+            { name: 'Aqua Air Mineral 600ml', price: 3800, icon: 'fa-bottle-water', color: 'bg-blue-400' },
+            { name: 'Roti Aoka Cokelat', price: 4500, icon: 'fa-bread-slice', color: 'bg-yellow-600' },
+            { name: 'Minyak Goreng Refill 2L', price: 38500, icon: 'fa-bottle-droplet', color: 'bg-yellow-500' },
+            { name: 'Tissue Paseo 250s', price: 18900, icon: 'fa-box-tissue', color: 'bg-pink-400' },
+            { name: 'Oreo Vanilla Roll', price: 10200, icon: 'fa-cookie', color: 'bg-blue-700' },
+            { name: 'Bear Brand Susu Steril', price: 10500, icon: 'fa-bottle-droplet', color: 'bg-slate-500' },
+            { name: 'Nescafe Can Original', price: 11000, icon: 'fa-mug-saucer', color: 'bg-amber-900' },
+            { name: 'Samyang Spicy Noodle', price: 21500, icon: 'fa-fire', color: 'bg-red-700' },
+            { name: 'Sabun Lifebuoy Red', price: 5200, icon: 'fa-soap', color: 'bg-red-600' },
+            { name: 'Pepsodent Herbal 190g', price: 18500, icon: 'fa-tooth', color: 'bg-emerald-600' },
+            { name: 'Pringles Original 107g', price: 24500, icon: 'fa-box', color: 'bg-red-600' },
+            { name: 'Bango Kecap Manis 135ml', price: 11500, icon: 'fa-bottle-droplet', color: 'bg-amber-950' },
+            { name: 'Gulaku Gula Pasir 1kg', price: 17500, icon: 'fa-box', color: 'bg-emerald-500' },
+            { name: 'Good Day Mochacinno', price: 7500, icon: 'fa-wine-bottle', color: 'bg-red-500' },
+            { name: 'You C1000 Lemon', price: 8500, icon: 'fa-bottle-water', color: 'bg-yellow-500' },
+            { name: 'Yakult Pack (5s)', price: 10800, icon: 'fa-box-tissue', color: 'bg-red-400' },
+            { name: 'Kopiko 78 Cokelat', price: 7000, icon: 'fa-wine-bottle', color: 'bg-amber-800' },
+            { name: 'Shampoo Clear Menthol', price: 29500, icon: 'fa-pump-soap', color: 'bg-blue-700' },
+            { name: 'Rinso Anti Noda 770g', price: 23500, icon: 'fa-box', color: 'bg-emerald-600' }
         ];
 
-        // Customer Presets with Payment Methods (Tunai, QRIS, Debit)
+        // Database 20 Variasi Pelanggan
         const CUSTOMER_PRESETS = [
             { name: 'Budi Santoso', isMember: true, payMethod: 'Tunai', avatar: 'fa-user-astronaut', color: 'bg-indigo-600' },
             { name: 'Siti Rahma', isMember: false, payMethod: 'QRIS', avatar: 'fa-user-ninja', color: 'bg-pink-600' },
             { name: 'Andi Pratama', isMember: true, payMethod: 'Debit', avatar: 'fa-user-tie', color: 'bg-emerald-600' },
             { name: 'Dewi Lestari', isMember: false, payMethod: 'Tunai', avatar: 'fa-user-nurse', color: 'bg-purple-600' },
-            { name: 'Rangga Wijaya', isMember: true, payMethod: 'QRIS', avatar: 'fa-user-secret', color: 'bg-amber-600' }
+            { name: 'Rangga Wijaya', isMember: true, payMethod: 'QRIS', avatar: 'fa-user-secret', color: 'bg-amber-600' },
+            { name: 'Rina Kusuma', isMember: true, payMethod: 'Tunai', avatar: 'fa-user-graduate', color: 'bg-teal-600' },
+            { name: 'Doni Laksana', isMember: false, payMethod: 'Debit', avatar: 'fa-user-doctor', color: 'bg-cyan-600' },
+            { name: 'Eka Prasetya', isMember: false, payMethod: 'QRIS', avatar: 'fa-user-gear', color: 'bg-orange-600' },
+            { name: 'Fikri Haikal', isMember: true, payMethod: 'Tunai', avatar: 'fa-user-shield', color: 'bg-blue-700' },
+            { name: 'Gita Gutawa', isMember: true, payMethod: 'Debit', avatar: 'fa-user-pen', color: 'bg-rose-600' },
+            { name: 'Hendra Gunawan', isMember: false, payMethod: 'Tunai', avatar: 'fa-user-check', color: 'bg-slate-600' },
+            { name: 'Indah Permata', isMember: true, payMethod: 'QRIS', avatar: 'fa-user-large', color: 'bg-violet-600' },
+            { name: 'Joko Widodo', isMember: false, payMethod: 'Tunai', avatar: 'fa-user', color: 'bg-emerald-700' },
+            { name: 'Kartika Sari', isMember: true, payMethod: 'Debit', avatar: 'fa-user-tag', color: 'bg-red-600' },
+            { name: 'Luki Hermawan', isMember: false, payMethod: 'QRIS', avatar: 'fa-user-clock', color: 'bg-yellow-600' },
+            { name: 'Maya Suprihatin', isMember: true, payMethod: 'Tunai', avatar: 'fa-user-minus', color: 'bg-pink-700' },
+            { name: 'Nugroho Adi', isMember: false, payMethod: 'Tunai', avatar: 'fa-user-lock', color: 'bg-blue-800' },
+            { name: 'Olivia Jensen', isMember: true, payMethod: 'QRIS', avatar: 'fa-user-plus', color: 'bg-purple-700' },
+            { name: 'Pratama Arhan', isMember: false, payMethod: 'Debit', avatar: 'fa-user-gear', color: 'bg-emerald-800' },
+            { name: 'Qory Sandioriva', isMember: true, payMethod: 'Tunai', avatar: 'fa-user-astronaut', color: 'bg-indigo-700' }
         ];
 
         // Game State Variables
         let totalScore = 0;
         let customerIndex = 0;
+        let queueList = [];
         let reputation = 3;
         let currentCustomer = null;
         let currentItems = [];
@@ -271,6 +301,7 @@
         let targetChange = 0;
         let patienceTimer = null;
         let patiencePct = 100;
+        const TARGET_CUSTOMERS_PER_SHIFT = 8; // 8 pelanggan per sesi game
 
         // Start Game
         function startGame() {
@@ -278,8 +309,11 @@
             customerIndex = 0;
             reputation = 3;
             
+            // Acak antrean pelanggan dari database 20 orang
+            queueList = [...CUSTOMER_PRESETS].sort(() => 0.5 - Math.random()).slice(0, TARGET_CUSTOMERS_PER_SHIFT);
+
             document.getElementById('game-score').innerText = 'Rp 0';
-            document.getElementById('cust-count').innerText = `0 / ${CUSTOMER_PRESETS.length}`;
+            document.getElementById('cust-count').innerText = `0 / ${TARGET_CUSTOMERS_PER_SHIFT}`;
             updateReputationUI();
 
             document.getElementById('game-modal').classList.add('hidden');
@@ -288,7 +322,7 @@
 
         // Load Next Customer
         function nextCustomer() {
-            if (customerIndex >= CUSTOMER_PRESETS.length || reputation <= 0) {
+            if (customerIndex >= TARGET_CUSTOMERS_PER_SHIFT || reputation <= 0) {
                 endGame();
                 return;
             }
@@ -299,10 +333,10 @@
             givenChange = 0;
             scannedItemsCount = 0;
 
-            currentCustomer = CUSTOMER_PRESETS[customerIndex];
+            currentCustomer = queueList[customerIndex];
             
-            // Randomly select 2 - 4 items
-            const itemQty = Math.floor(Math.random() * 3) + 2;
+            // Randomly select 2 - 5 items
+            const itemQty = Math.floor(Math.random() * 4) + 2;
             currentItems = [];
             for (let i = 0; i < itemQty; i++) {
                 const randomItem = ITEM_DATABASE[Math.floor(Math.random() * ITEM_DATABASE.length)];
@@ -322,17 +356,17 @@
                 document.getElementById('cust-badge').innerHTML = `<i class="fa-solid fa-user mr-1"></i>Non-Member`;
             }
 
-            // Set Dialogue according to payment method
+            // Dialogue according to payment method
             if (currentCustomer.payMethod === 'QRIS') {
-                document.getElementById('dialogue-text').innerText = `"Mba/mas, saya mau bayar pakai QRIS ya!"`;
+                document.getElementById('dialogue-text').innerText = `"Halo mba/mas, saya bayar pakai QRIS ya!"`;
             } else if (currentCustomer.payMethod === 'Debit') {
                 document.getElementById('dialogue-text').innerText = `"Saya bayar pakai Kartu Debit/BCA ya!"`;
             } else {
-                document.getElementById('dialogue-text').innerText = `"Hitung cepat ya mba, saya bayar pakai uang pas/tunai."`;
+                document.getElementById('dialogue-text').innerText = `"Tolong hitungkan cepat ya, saya bayar pakai uang tunai."`;
             }
 
-            document.getElementById('queue-remaining-badge').innerText = `${CUSTOMER_PRESETS.length - customerIndex - 1} Orang Menunggu`;
-            document.getElementById('cust-count').innerText = `${customerIndex + 1} / ${CUSTOMER_PRESETS.length}`;
+            document.getElementById('queue-remaining-badge').innerText = `${TARGET_CUSTOMERS_PER_SHIFT - customerIndex - 1} Orang Menunggu`;
+            document.getElementById('cust-count').innerText = `${customerIndex + 1} / ${TARGET_CUSTOMERS_PER_SHIFT}`;
 
             // Reset Member Button UI
             document.getElementById('member-status-tag').innerText = 'Belum';
@@ -386,14 +420,19 @@
             calculateBill();
         }
 
-        // Calculate Bill Totals & Target Change
+        // Calculate Bill Totals & Target Change (Pembulatan ke Kelipatan Rp 100)
         function calculateBill() {
             const scannedItems = currentItems.filter(i => i.scanned);
-            const subtotal = scannedItems.reduce((sum, i) => sum + i.price, 0);
-            const discount = isMemberDiscountApplied ? subtotal * 0.10 : 0;
-            const total = subtotal - discount;
+            const rawSubtotal = scannedItems.reduce((sum, i) => sum + i.price, 0);
+            
+            // Raw discount 10%
+            const rawDiscount = isMemberDiscountApplied ? rawSubtotal * 0.10 : 0;
+            
+            // Pembulatan ke kelipatan Rp 100 terdekat
+            const discount = Math.round(rawDiscount / 100) * 100;
+            const total = Math.round((rawSubtotal - discount) / 100) * 100;
 
-            document.getElementById('subtotal-val').innerText = `Rp ${subtotal.toLocaleString('id-ID')}`;
+            document.getElementById('subtotal-val').innerText = `Rp ${rawSubtotal.toLocaleString('id-ID')}`;
             document.getElementById('discount-val').innerText = `- Rp ${discount.toLocaleString('id-ID')}`;
             document.getElementById('total-val').innerText = `Rp ${total.toLocaleString('id-ID')}`;
 
@@ -500,9 +539,10 @@
                 updateReputationUI();
                 alert(`Kembalian Salah! Di layar POS tertulis Rp ${targetChange.toLocaleString('id-ID')}, tapi kamu memberikan Rp ${givenChange.toLocaleString('id-ID')}. Reputasi berkurang!`);
             } else {
-                const subtotal = currentItems.reduce((sum, i) => sum + i.price, 0);
-                const discount = isMemberDiscountApplied ? subtotal * 0.10 : 0;
-                const total = subtotal - discount;
+                const rawSubtotal = currentItems.reduce((sum, i) => sum + i.price, 0);
+                const rawDiscount = isMemberDiscountApplied ? rawSubtotal * 0.10 : 0;
+                const discount = Math.round(rawDiscount / 100) * 100;
+                const total = Math.round((rawSubtotal - discount) / 100) * 100;
 
                 totalScore += total;
                 document.getElementById('game-score').innerText = `Rp ${totalScore.toLocaleString('id-ID')}`;
