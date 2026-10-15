@@ -68,10 +68,11 @@
                 <div class="flex justify-between items-start">
                     <div class="flex items-center space-x-3">
                         <div id="cust-avatar" class="w-14 h-14 bg-red-600 rounded-2xl flex items-center justify-center text-2xl text-white shadow-md border-2 border-white">
-                            <i class="fa-solid fa-user-ninja"></i>
+                            <i class="fa-solid fa-user"></i>
                         </div>
                         <div>
-                            <h3 id="cust-name" class="font-bold text-white text-base">Pelanggan #1</h3>
+                            <!-- Nama Pelanggan Asli (Tanpa Jabatan) -->
+                            <h3 id="cust-name" class="font-bold text-white text-base">Budi Santoso</h3>
                             <p id="cust-badge" class="text-[11px] text-amber-400 font-bold flex items-center mt-0.5">
                                 <i class="fa-solid fa-id-card mr-1"></i>Anggota Koperasi
                             </p>
@@ -134,7 +135,7 @@
                         <span id="subtotal-val" class="text-slate-200 font-bold">Rp 0</span>
                     </div>
                     <div class="flex justify-between text-slate-400">
-                        <span>Diskon Anggota Koperasi (10%):</span>
+                        <span>Diskon Anggota (10%):</span>
                         <span id="discount-val" class="text-red-400 font-bold">- Rp 0</span>
                     </div>
                     <div class="flex justify-between text-sm font-black text-emerald-400 pt-1 border-t border-slate-800">
@@ -229,15 +230,15 @@
             <div class="space-y-2">
                 <h2 id="modal-title" class="text-2xl font-black text-white">Koperasi Dash</h2>
                 <p id="modal-subtitle" class="text-xs text-slate-400 leading-relaxed">
-                    Sistem akan mengacak target omset dan jumlah antrean pelanggan setiap kali shift dimulai.
+                    Setiap shift memiliki target omset dan jumlah antrean pelanggan yang bervariasi.
                 </p>
             </div>
 
             <div id="modal-stats" class="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-xs space-y-2 text-left">
                 <div class="flex justify-between"><span class="text-slate-400">Target Minimal Shift Ini:</span><span id="modal-target-goal" class="font-bold text-amber-300">Rp 0</span></div>
                 <div class="flex justify-between"><span class="text-slate-400">Total Antrean Pelanggan:</span><span id="modal-cust-target" class="font-bold text-emerald-400">0 Orang</span></div>
-                <div id="modal-last-score-row" class="hidden flex justify-between border-t border-slate-800 pt-2"><span class="text-slate-400">Omset Total Diterima:</span><span id="final-score" class="font-bold text-emerald-400">Rp 0</span></div>
-                <div id="modal-shu-row" class="hidden flex justify-between"><span class="text-slate-400">Persentase Pencapaian:</span><span id="final-achievement" class="font-bold text-amber-300">0%</span></div>
+                <div id="modal-last-score-row" class="hidden flex justify-between border-t border-slate-800 pt-2"><span class="text-slate-400">Total Omset Terkumpul:</span><span id="final-score" class="font-bold text-emerald-400">Rp 0</span></div>
+                <div id="modal-bonus-row" class="hidden flex justify-between"><span class="text-slate-400">Pencapaian Omset:</span><span id="final-achievement" class="font-bold text-amber-300">0%</span></div>
             </div>
 
             <button onclick="startGame()" class="w-full py-3.5 bg-red-600 hover:bg-red-500 text-white font-black text-sm rounded-2xl shadow-xl transition transform active:scale-95 flex items-center justify-center space-x-2">
@@ -280,27 +281,28 @@
             { name: 'Tissue Paseo Soft Pack', price: 18900, icon: 'fa-box-tissue', color: 'bg-pink-400' }
         ];
 
+        // Database Pelanggan dengan Nama Realistis Tanpa Kurung Jabatan
         const CUSTOMER_PRESETS = [
-            { name: 'Pak Budi (Manager)', isMember: true, payMethod: 'Tunai', trait: 'Impatient', avatar: 'fa-user-tie', color: 'bg-red-600' },
-            { name: 'Siti Rahma (Staff)', isMember: false, payMethod: 'QRIS', trait: 'Normal', avatar: 'fa-user-nurse', color: 'bg-pink-600' },
-            { name: 'Andi (Mahasiswa)', isMember: true, payMethod: 'Tunai', trait: 'Normal', avatar: 'fa-user-graduate', color: 'bg-emerald-600' },
-            { name: 'Dewi (Dosen)', isMember: false, payMethod: 'Debit', trait: 'Impatient', avatar: 'fa-user-doctor', color: 'bg-purple-600' },
-            { name: 'Mas Rangga (Staff IT)', isMember: true, payMethod: 'QRIS', trait: 'Normal', avatar: 'fa-user-secret', color: 'bg-amber-600' },
-            { name: 'Pak Hendra (Security)', isMember: true, payMethod: 'Tunai', trait: 'Normal', avatar: 'fa-user-shield', color: 'bg-slate-600' },
-            { name: 'Mbak Rina (Staff Marketing)', isMember: false, payMethod: 'QRIS', trait: 'Normal', avatar: 'fa-user-pen', color: 'bg-teal-600' },
-            { name: 'Pak Eka (Teknisi)', isMember: true, payMethod: 'Debit', trait: 'Impatient', avatar: 'fa-user-gear', color: 'bg-orange-600' },
-            { name: 'Fikri (Pelajar)', isMember: false, payMethod: 'Tunai', trait: 'Normal', avatar: 'fa-user', color: 'bg-blue-600' },
-            { name: 'Gita (HRD Staff)', isMember: true, payMethod: 'QRIS', trait: 'Normal', avatar: 'fa-user-large', color: 'bg-rose-600' },
-            { name: 'Pak Joko (Driver)', isMember: true, payMethod: 'Tunai', trait: 'Impatient', avatar: 'fa-user-astronaut', color: 'bg-indigo-600' },
-            { name: 'Kartika (Accounting)', isMember: true, payMethod: 'Debit', trait: 'Normal', avatar: 'fa-user-tag', color: 'bg-red-700' },
-            { name: 'Luki (Intern)', isMember: false, payMethod: 'QRIS', trait: 'Normal', avatar: 'fa-user-clock', color: 'bg-yellow-600' },
-            { name: 'Maya (Operational)', isMember: true, payMethod: 'Tunai', trait: 'Normal', avatar: 'fa-user-minus', color: 'bg-pink-700' },
-            { name: 'Nugroho (Supervisor)', isMember: false, payMethod: 'Tunai', trait: 'Impatient', avatar: 'fa-user-lock', color: 'bg-blue-800' },
-            { name: 'Olivia (Freelancer)', isMember: true, payMethod: 'QRIS', trait: 'Normal', avatar: 'fa-user-plus', color: 'bg-purple-700' },
-            { name: 'Pratama (Atlet)', isMember: false, payMethod: 'Debit', trait: 'Normal', avatar: 'fa-user-gear', color: 'bg-emerald-800' },
-            { name: 'Qory (Designer)', isMember: true, payMethod: 'Tunai', trait: 'Impatient', avatar: 'fa-user-astronaut', color: 'bg-indigo-700' },
-            { name: 'Rian (Staff Admin)', isMember: true, payMethod: 'QRIS', trait: 'Normal', avatar: 'fa-user-check', color: 'bg-cyan-600' },
-            { name: 'Siska (Gamer)', isMember: false, payMethod: 'Tunai', trait: 'Normal', avatar: 'fa-user-ninja', color: 'bg-violet-600' }
+            { name: 'Budi Santoso', isMember: true, payMethod: 'Tunai', trait: 'Impatient', avatar: 'fa-user-tie', color: 'bg-red-600' },
+            { name: 'Siti Rahmawati', isMember: false, payMethod: 'QRIS', trait: 'Normal', avatar: 'fa-user-nurse', color: 'bg-pink-600' },
+            { name: 'Andi Pratama', isMember: true, payMethod: 'Tunai', trait: 'Normal', avatar: 'fa-user-graduate', color: 'bg-emerald-600' },
+            { name: 'Dewi Lestari', isMember: false, payMethod: 'Debit', trait: 'Impatient', avatar: 'fa-user-doctor', color: 'bg-purple-600' },
+            { name: 'Rangga Wijaya', isMember: true, payMethod: 'QRIS', trait: 'Normal', avatar: 'fa-user-secret', color: 'bg-amber-600' },
+            { name: 'Hendra Gunawan', isMember: true, payMethod: 'Tunai', trait: 'Normal', avatar: 'fa-user-shield', color: 'bg-slate-600' },
+            { name: 'Rina Kartika', isMember: false, payMethod: 'QRIS', trait: 'Normal', avatar: 'fa-user-pen', color: 'bg-teal-600' },
+            { name: 'Eka Syahputra', isMember: true, payMethod: 'Debit', trait: 'Impatient', avatar: 'fa-user-gear', color: 'bg-orange-600' },
+            { name: 'Fikri Haikal', isMember: false, payMethod: 'Tunai', trait: 'Normal', avatar: 'fa-user', color: 'bg-blue-600' },
+            { name: 'Gita Nanda', isMember: true, payMethod: 'QRIS', trait: 'Normal', avatar: 'fa-user-large', color: 'bg-rose-600' },
+            { name: 'Joko Susilo', isMember: true, payMethod: 'Tunai', trait: 'Impatient', avatar: 'fa-user-astronaut', color: 'bg-indigo-600' },
+            { name: 'Kartika Sari', isMember: true, payMethod: 'Debit', trait: 'Normal', avatar: 'fa-user-tag', color: 'bg-red-700' },
+            { name: 'Luki Perdana', isMember: false, payMethod: 'QRIS', trait: 'Normal', avatar: 'fa-user-clock', color: 'bg-yellow-600' },
+            { name: 'Maya Indah', isMember: true, payMethod: 'Tunai', trait: 'Normal', avatar: 'fa-user-minus', color: 'bg-pink-700' },
+            { name: 'Nugroho Adi', isMember: false, payMethod: 'Tunai', trait: 'Impatient', avatar: 'fa-user-lock', color: 'bg-blue-800' },
+            { name: 'Olivia Putri', isMember: true, payMethod: 'QRIS', trait: 'Normal', avatar: 'fa-user-plus', color: 'bg-purple-700' },
+            { name: 'Pratama Rizky', isMember: false, payMethod: 'Debit', trait: 'Normal', avatar: 'fa-user-gear', color: 'bg-emerald-800' },
+            { name: 'Qory Amelia', isMember: true, payMethod: 'Tunai', trait: 'Impatient', avatar: 'fa-user-astronaut', color: 'bg-indigo-700' },
+            { name: 'Rian Hidayat', isMember: true, payMethod: 'QRIS', trait: 'Normal', avatar: 'fa-user-check', color: 'bg-cyan-600' },
+            { name: 'Siska Febriani', isMember: false, payMethod: 'Tunai', trait: 'Normal', avatar: 'fa-user-ninja', color: 'bg-violet-600' }
         ];
 
         let totalScore = 0;
@@ -339,7 +341,6 @@
         }
 
         function nextCustomer() {
-            // Permainan hanya berhenti jika antrean HABIS atau NYAWA HABIS
             if (customerIndex >= targetCustomersPerShift || reputation <= 0) {
                 endGame();
                 return;
@@ -592,23 +593,23 @@
             const sub = document.getElementById('modal-subtitle');
             
             document.getElementById('modal-last-score-row').classList.remove('hidden');
-            document.getElementById('modal-shu-row').classList.remove('hidden');
+            document.getElementById('modal-bonus-row').classList.remove('hidden');
             
             const pctAchievement = Math.round((totalScore / targetSalesGoal) * 100);
 
             document.getElementById('final-score').innerText = `Rp ${totalScore.toLocaleString('id-ID')}`;
-            document.getElementById('final-achievement').innerText = `${pctAchievement}% (${pctAchievement >= 100 ? 'SUKSES' : 'GAGAL'})`;
+            document.getElementById('final-achievement').innerText = `${pctAchievement}% (${pctAchievement >= 100 ? 'SUKSES' : 'BELUM TERCAPAI'})`;
             
             document.getElementById('modal-target-goal').innerText = `Rp ${targetSalesGoal.toLocaleString('id-ID')}`;
             document.getElementById('modal-cust-target').innerText = `${customerIndex} / ${targetCustomersPerShift} Pelanggan`;
 
             if (totalScore >= targetSalesGoal && reputation > 0) {
                 if (pctAchievement > 120) {
-                    title.innerText = 'SUPER OVERACHIEVER! SHU MELIMPAH!';
-                    sub.innerText = `Luar biasa! Kamu tidak hanya mencapai target, tetapi berhasil melayani seluruh sisa antrean hingga omset mencapai ${pctAchievement}%!`;
+                    title.innerText = 'BONUS KEUNTUNGAN MELIMPAH!';
+                    sub.innerText = `Luar biasa! Kamu berhasil melayani seluruh sisa antrean hingga omset mencapai ${pctAchievement}% dari target minimal!`;
                 } else {
                     title.innerText = 'TARGET SHIFT TERCAPAI!';
-                    sub.innerText = 'Selamat! Kamu berhasil melayani pelanggan Koperasi Dash dan melampaui Target Omset Kas!';
+                    sub.innerText = 'Selamat! Kamu berhasil melayani pelanggan Koperasi Dash dan mencapai Target Omset Minimal!';
                 }
                 icon.className = 'fa-solid fa-trophy';
                 confetti({ particleCount: 150, spread: 90, origin: { y: 0.5 } });
