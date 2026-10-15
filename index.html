@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Koperasi Desa Merah Putih - Koperasi Dash</title>
+    <title>Koperasi Dash - Kasir Simulator & Time Management</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -13,16 +13,16 @@
 </head>
 <body class="bg-slate-950 font-sans text-slate-100 min-h-screen flex flex-col justify-between">
 
-    <!-- Top Navigation Header (TEMA MERAH PUTIH KOPERASI DESA) -->
+    <!-- Top Navigation Header (TEMA MERAH PUTIH) -->
     <header class="bg-red-700 border-b-4 border-white px-4 py-3 sticky top-0 z-40 shadow-xl">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-3">
                 <div class="w-10 h-10 bg-white text-red-600 rounded-xl flex items-center justify-center text-xl font-black shadow-md">
-                    <i class="fa-solid fa-flag"></i>
+                    <i class="fa-solid fa-store"></i>
                 </div>
                 <div>
-                    <h1 class="text-base font-black text-white tracking-wide uppercase">Koperasi Desa Merah Putih</h1>
-                    <p class="text-[11px] text-amber-200 font-bold">Simulator Kasir & Manajemen Omset Desa</p>
+                    <h1 class="text-base font-black text-white tracking-wide uppercase">Koperasi Dash</h1>
+                    <p class="text-[11px] text-amber-200 font-bold">Simulator Kasir & Manajemen Omset Koperasi</p>
                 </div>
             </div>
 
@@ -71,9 +71,9 @@
                             <i class="fa-solid fa-user-ninja"></i>
                         </div>
                         <div>
-                            <h3 id="cust-name" class="font-bold text-white text-base">Warga Desa #1</h3>
+                            <h3 id="cust-name" class="font-bold text-white text-base">Pelanggan #1</h3>
                             <p id="cust-badge" class="text-[11px] text-amber-400 font-bold flex items-center mt-0.5">
-                                <i class="fa-solid fa-id-card mr-1"></i>Anggota Koperasi Desa
+                                <i class="fa-solid fa-id-card mr-1"></i>Anggota Koperasi
                             </p>
                         </div>
                     </div>
@@ -85,7 +85,7 @@
                 <!-- Customer Patience Bar -->
                 <div class="space-y-1">
                     <div class="flex justify-between text-[11px] font-bold">
-                        <span class="text-slate-400">Tingkat Kesabaran Warga</span>
+                        <span class="text-slate-400">Tingkat Kesabaran Pelanggan</span>
                         <span id="patience-text" class="text-emerald-400">100%</span>
                     </div>
                     <div class="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden p-0.5 border border-slate-700">
@@ -102,8 +102,8 @@
 
             <!-- Queue Counter -->
             <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl flex items-center justify-between text-xs font-bold shadow-lg">
-                <span class="text-slate-400"><i class="fa-solid fa-users text-red-500 mr-2"></i>Antrean Warga Desa:</span>
-                <span id="queue-remaining-badge" class="bg-red-600/20 text-red-300 border border-red-500/40 px-3 py-1 rounded-full">7 Orang Menunggu</span>
+                <span class="text-slate-400"><i class="fa-solid fa-users text-red-500 mr-2"></i>Antrean Pelanggan:</span>
+                <span id="queue-remaining-badge" class="bg-red-600/20 text-red-300 border border-red-500/40 px-3 py-1 rounded-full">9 Orang Menunggu</span>
             </div>
 
         </div>
@@ -134,7 +134,7 @@
                         <span id="subtotal-val" class="text-slate-200 font-bold">Rp 0</span>
                     </div>
                     <div class="flex justify-between text-slate-400">
-                        <span>Diskon Anggota Desa (10%):</span>
+                        <span>Diskon Anggota Koperasi (10%):</span>
                         <span id="discount-val" class="text-red-400 font-bold">- Rp 0</span>
                     </div>
                     <div class="flex justify-between text-sm font-black text-emerald-400 pt-1 border-t border-slate-800">
@@ -146,7 +146,7 @@
                 <!-- POS System Payment Method & Change Screen -->
                 <div class="space-y-2 flex flex-col justify-between">
                     <button id="btn-member" onclick="toggleMemberDiscount()" class="w-full py-1.5 px-3 bg-slate-900 hover:bg-slate-800 text-red-400 border border-red-500/40 rounded-lg font-bold text-xs transition flex items-center justify-between">
-                        <span><i class="fa-solid fa-id-card mr-2"></i>Scan Kartu Anggota Koperasi</span>
+                        <span><i class="fa-solid fa-id-card mr-2"></i>Scan Kartu Anggota</span>
                         <span id="member-status-tag" class="text-[10px] bg-red-500/20 text-red-300 px-2 py-0.5 rounded">Belum</span>
                     </button>
 
@@ -173,7 +173,7 @@
             <!-- Cash Drawer / Payment Controls -->
             <div id="cash-calculator" class="space-y-3 bg-slate-950/60 p-4 rounded-xl border border-slate-800">
                 <div class="flex justify-between items-center text-xs font-bold">
-                    <span id="drawer-label" class="text-slate-300"><i class="fa-solid fa-cash-register text-red-500 mr-2"></i>Laci Uang Kasir Koperasi Desa:</span>
+                    <span id="drawer-label" class="text-slate-300"><i class="fa-solid fa-cash-register text-red-500 mr-2"></i>Laci Uang Kasir Koperasi:</span>
                     <span id="change-display-container" class="text-slate-400">Diambil: <strong id="change-given-val" class="text-emerald-400 text-sm">Rp 0</strong></span>
                 </div>
 
@@ -223,20 +223,20 @@
         <div class="bg-slate-900 border-2 border-red-600 max-w-md w-full p-8 rounded-3xl shadow-2xl text-center space-y-6">
             
             <div class="w-20 h-20 bg-red-600 rounded-3xl flex items-center justify-center text-white text-4xl mx-auto shadow-lg shadow-red-600/40 border-2 border-white">
-                <i id="modal-icon" class="fa-solid fa-flag"></i>
+                <i id="modal-icon" class="fa-solid fa-store"></i>
             </div>
 
             <div class="space-y-2">
-                <h2 id="modal-title" class="text-2xl font-black text-white">Koperasi Desa Merah Putih</h2>
+                <h2 id="modal-title" class="text-2xl font-black text-white">Koperasi Dash</h2>
                 <p id="modal-subtitle" class="text-xs text-slate-400 leading-relaxed">
-                    Capai target omset Koperasi Desa sebesar <strong class="text-amber-300">Rp 100.000</strong>! Melayani transaksi warga desa dengan cepat, akurat, dan ramah.
+                    Capai target omset Koperasi sebesar <strong class="text-amber-300">Rp 100.000</strong>! Melayani transaksi produk cafe, makanan hangat, dan belanjaan harian dengan cepat dan akurat.
                 </p>
             </div>
 
             <div id="modal-stats" class="hidden bg-slate-950 p-4 rounded-2xl border border-slate-800 text-xs space-y-2 text-left">
                 <div class="flex justify-between"><span class="text-slate-400">Pencapaian Omset Kas:</span><span id="final-score" class="font-bold text-amber-300">Rp 0</span></div>
                 <div class="flex justify-between"><span class="text-slate-400">Target Omset Shift:</span><span class="font-bold text-slate-300">Rp 100.000</span></div>
-                <div class="flex justify-between"><span class="text-slate-400">Warga Terlayani:</span><span id="final-cust" class="font-bold text-emerald-400">0 Orang</span></div>
+                <div class="flex justify-between"><span class="text-slate-400">Pelanggan Terlayani:</span><span id="final-cust" class="font-bold text-emerald-400">0 Orang</span></div>
             </div>
 
             <button onclick="startGame()" class="w-full py-3.5 bg-red-600 hover:bg-red-500 text-white font-black text-sm rounded-2xl shadow-xl transition transform active:scale-95 flex items-center justify-center space-x-2">
@@ -249,35 +249,70 @@
     <!-- JAVASCRIPT GAME LOGIC -->
     <script>
         const TARGET_SALES_GOAL = 100000; // Target Sales Rp 100.000
-        const TARGET_CUSTOMERS_PER_SHIFT = 8;
+        const TARGET_CUSTOMERS_PER_SHIFT = 10; // 10 Pelanggan per Shift
 
+        // Database Produk Ritel Modern & RTE (FamilyMart Style)
         const ITEM_DATABASE = [
-            { name: 'Indomie Goreng Original', price: 3100, icon: 'fa-bowl-food', color: 'bg-red-500' },
-            { name: 'Pocari Sweat 500ml', price: 9200, icon: 'fa-bottle-water', color: 'bg-blue-600' },
-            { name: 'Ultra Milk Cokelat 250ml', price: 7200, icon: 'fa-box-tissue', color: 'bg-amber-700' },
-            { name: 'Chitato Sapi Panggang', price: 12500, icon: 'fa-cookie-bite', color: 'bg-orange-600' },
-            { name: 'Silverqueen Milk Choco', price: 16500, icon: 'fa-candy-cane', color: 'bg-amber-800' },
+            // Kopi & Cafe
+            { name: 'Ice Kopi Susu Aren', price: 18000, icon: 'fa-mug-saucer', color: 'bg-amber-800' },
+            { name: 'Ice Americano Coffee', price: 15000, icon: 'fa-mug-saucer', color: 'bg-amber-950' },
+            { name: 'Matcha Green Tea Latte', price: 20000, icon: 'fa-glass-water', color: 'bg-emerald-700' },
+            { name: 'Chocolate Ice Blend', price: 18000, icon: 'fa-glass-water', color: 'bg-amber-900' },
+
+            // Ready to Eat (RTE) / Fast Food
+            { name: 'Fried Chicken + Nasi', price: 22000, icon: 'fa-drumstick-bite', color: 'bg-orange-600' },
+            { name: 'Oden Original (3 Skewer)', price: 15000, icon: 'fa-utensils', color: 'bg-yellow-600' },
+            { name: 'Spicy Oden Seafood Bowl', price: 18000, icon: 'fa-fire', color: 'bg-red-600' },
+            { name: 'Sosis Kanzler Singel Keju', price: 9000, icon: 'fa-hotdog', color: 'bg-red-700' },
+            { name: 'Bakso Kanzler Hot Spiced', price: 9000, icon: 'fa-circle-dot', color: 'bg-red-800' },
+            { name: 'Hotdog Beef Cheese', price: 16000, icon: 'fa-hotdog', color: 'bg-amber-700' },
+
+            // Frozen Food & Ice Cream
+            { name: 'Fiesta Chicken Nugget 250g', price: 28500, icon: 'fa-box', color: 'bg-yellow-500' },
+            { name: 'CEDEA Fish Dumpling Cheese', price: 18500, icon: 'fa-box', color: 'bg-amber-600' },
+            { name: 'Es Krim Soft Serve Vanilla', price: 8000, icon: 'fa-ice-cream', color: 'bg-pink-500' },
+
+            // Snack & Biscuit
+            { name: 'Pringles Potato Chips 107g', price: 24500, icon: 'fa-box', color: 'bg-red-600' },
+            { name: 'Chitato Sapi Panggang 68g', price: 12500, icon: 'fa-cookie-bite', color: 'bg-orange-600' },
+            { name: 'Silverqueen Milk Choco 58g', price: 16500, icon: 'fa-candy-cane', color: 'bg-amber-800' },
+            { name: 'Oreo Vanilla Roll', price: 10200, icon: 'fa-cookie', color: 'bg-blue-700' },
+
+            // Minuman Botol & Kemasan
+            { name: 'Pocari Sweat Botol 500ml', price: 9200, icon: 'fa-bottle-water', color: 'bg-blue-600' },
             { name: 'Teh Pucuk Harum 350ml', price: 4000, icon: 'fa-wine-bottle', color: 'bg-emerald-600' },
+            { name: 'Ultra Milk Cokelat 250ml', price: 7200, icon: 'fa-box-tissue', color: 'bg-amber-700' },
             { name: 'Aqua Air Mineral 600ml', price: 3800, icon: 'fa-bottle-water', color: 'bg-blue-400' },
-            { name: 'Roti Aoka Cokelat', price: 4500, icon: 'fa-bread-slice', color: 'bg-yellow-600' },
+
+            // Sembako & Kebutuhan
+            { name: 'Indomie Goreng Original', price: 3100, icon: 'fa-bowl-food', color: 'bg-red-500' },
             { name: 'Minyak Goreng Refill 2L', price: 38500, icon: 'fa-bottle-droplet', color: 'bg-yellow-500' },
-            { name: 'Tissue Paseo 250s', price: 18900, icon: 'fa-box-tissue', color: 'bg-pink-400' },
-            { name: 'Beras Premium Desa 5kg', price: 74500, icon: 'fa-box', color: 'bg-emerald-700' },
-            { name: 'Gulaku Gula Pasir 1kg', price: 17500, icon: 'fa-box', color: 'bg-amber-600' },
-            { name: 'Kopi Kapal Api Sachet', price: 14500, icon: 'fa-box', color: 'bg-red-800' },
-            { name: 'Buku Tulis Sidu 38 Lembar', price: 4500, icon: 'fa-book', color: 'bg-blue-500' },
-            { name: 'Pulpen Standard AE7 0.5', price: 2500, icon: 'fa-pen', color: 'bg-black' }
+            { name: 'Beras Premium 5kg', price: 74500, icon: 'fa-box', color: 'bg-emerald-700' },
+            { name: 'Tissue Paseo Soft Pack', price: 18900, icon: 'fa-box-tissue', color: 'bg-pink-400' }
         ];
 
+        // Database 40 Variasi Pelanggan
         const CUSTOMER_PRESETS = [
-            { name: 'Pak Kades Budi', isMember: true, payMethod: 'Tunai', trait: 'Impatient', avatar: 'fa-user-tie', color: 'bg-red-600' },
-            { name: 'Bu RT Siti', isMember: false, payMethod: 'QRIS', trait: 'Normal', avatar: 'fa-user-nurse', color: 'bg-pink-600' },
-            { name: 'Bagas (Petani Desa)', isMember: true, payMethod: 'Tunai', trait: 'Normal', avatar: 'fa-user-graduate', color: 'bg-emerald-600' },
-            { name: 'Bu Guru Dewi', isMember: false, payMethod: 'Debit', trait: 'Impatient', avatar: 'fa-user-doctor', color: 'bg-purple-600' },
-            { name: 'Mas Rangga (Staff Desa)', isMember: true, payMethod: 'QRIS', trait: 'Normal', avatar: 'fa-user-secret', color: 'bg-amber-600' },
-            { name: 'Pak Hendra (Babinsa)', isMember: true, payMethod: 'Tunai', trait: 'Normal', avatar: 'fa-user-shield', color: 'bg-slate-600' },
-            { name: 'Mbak Rina (Bidan Desa)', isMember: false, payMethod: 'QRIS', trait: 'Normal', avatar: 'fa-user-pen', color: 'bg-teal-600' },
-            { name: 'Pak Eka (Nelayan Desa)', isMember: true, payMethod: 'Debit', trait: 'Impatient', avatar: 'fa-user-gear', color: 'bg-orange-600' }
+            { name: 'Pak Budi (Manager)', isMember: true, payMethod: 'Tunai', trait: 'Impatient', avatar: 'fa-user-tie', color: 'bg-red-600' },
+            { name: 'Siti Rahma (Staff)', isMember: false, payMethod: 'QRIS', trait: 'Normal', avatar: 'fa-user-nurse', color: 'bg-pink-600' },
+            { name: 'Andi (Mahasiswa)', isMember: true, payMethod: 'Tunai', trait: 'Normal', avatar: 'fa-user-graduate', color: 'bg-emerald-600' },
+            { name: 'Dewi (Dosen)', isMember: false, payMethod: 'Debit', trait: 'Impatient', avatar: 'fa-user-doctor', color: 'bg-purple-600' },
+            { name: 'Mas Rangga (Staff IT)', isMember: true, payMethod: 'QRIS', trait: 'Normal', avatar: 'fa-user-secret', color: 'bg-amber-600' },
+            { name: 'Pak Hendra (Security)', isMember: true, payMethod: 'Tunai', trait: 'Normal', avatar: 'fa-user-shield', color: 'bg-slate-600' },
+            { name: 'Mbak Rina (Staff Marketing)', isMember: false, payMethod: 'QRIS', trait: 'Normal', avatar: 'fa-user-pen', color: 'bg-teal-600' },
+            { name: 'Pak Eka (Teknisi)', isMember: true, payMethod: 'Debit', trait: 'Impatient', avatar: 'fa-user-gear', color: 'bg-orange-600' },
+            { name: 'Fikri (Pelajar)', isMember: false, payMethod: 'Tunai', trait: 'Normal', avatar: 'fa-user', color: 'bg-blue-600' },
+            { name: 'Gita (HRD Staff)', isMember: true, payMethod: 'QRIS', trait: 'Normal', avatar: 'fa-user-large', color: 'bg-rose-600' },
+            { name: 'Pak Joko (Driver)', isMember: true, payMethod: 'Tunai', trait: 'Impatient', avatar: 'fa-user-astronaut', color: 'bg-indigo-600' },
+            { name: 'Kartika (Accounting)', isMember: true, payMethod: 'Debit', trait: 'Normal', avatar: 'fa-user-tag', color: 'bg-red-700' },
+            { name: 'Luki (Intern)', isMember: false, payMethod: 'QRIS', trait: 'Normal', avatar: 'fa-user-clock', color: 'bg-yellow-600' },
+            { name: 'Maya (Operational)', isMember: true, payMethod: 'Tunai', trait: 'Normal', avatar: 'fa-user-minus', color: 'bg-pink-700' },
+            { name: 'Nugroho (Supervisor)', isMember: false, payMethod: 'Tunai', trait: 'Impatient', avatar: 'fa-user-lock', color: 'bg-blue-800' },
+            { name: 'Olivia (Freelancer)', isMember: true, payMethod: 'QRIS', trait: 'Normal', avatar: 'fa-user-plus', color: 'bg-purple-700' },
+            { name: 'Pratama (Atlet)', isMember: false, payMethod: 'Debit', trait: 'Normal', avatar: 'fa-user-gear', color: 'bg-emerald-800' },
+            { name: 'Qory (Designer)', isMember: true, payMethod: 'Tunai', trait: 'Impatient', avatar: 'fa-user-astronaut', color: 'bg-indigo-700' },
+            { name: 'Rian (Staff Admin)', isMember: true, payMethod: 'QRIS', trait: 'Normal', avatar: 'fa-user-check', color: 'bg-cyan-600' },
+            { name: 'Siska (Gamer)', isMember: false, payMethod: 'Tunai', trait: 'Normal', avatar: 'fa-user-ninja', color: 'bg-violet-600' }
         ];
 
         let totalScore = 0;
@@ -345,14 +380,14 @@
 
             if (currentCustomer.isMember) {
                 document.getElementById('cust-badge').className = "text-[11px] text-amber-300 font-bold flex items-center mt-0.5";
-                document.getElementById('cust-badge').innerHTML = `<i class="fa-solid fa-id-card mr-1"></i>Anggota Koperasi Desa`;
+                document.getElementById('cust-badge').innerHTML = `<i class="fa-solid fa-id-card mr-1"></i>Anggota Koperasi`;
             } else {
                 document.getElementById('cust-badge').className = "text-[11px] text-slate-400 font-bold flex items-center mt-0.5";
-                document.getElementById('cust-badge').innerHTML = `<i class="fa-solid fa-user mr-1"></i>Warga Non-Anggota`;
+                document.getElementById('cust-badge').innerHTML = `<i class="fa-solid fa-user mr-1"></i>Non-Anggota`;
             }
 
             if (currentCustomer.payMethod === 'QRIS') {
-                document.getElementById('dialogue-text').innerText = `"Saya bayar pakai QRIS Koperasi Desa ya!"`;
+                document.getElementById('dialogue-text').innerText = `"Saya bayar pakai QRIS Koperasi ya!"`;
             } else if (currentCustomer.payMethod === 'Debit') {
                 document.getElementById('dialogue-text').innerText = `"Saya bayar pakai Kartu Debit ya!"`;
             } else {
@@ -394,7 +429,7 @@
 
         function toggleMemberDiscount() {
             if (!currentCustomer.isMember) {
-                alert('Warga ini bukan anggota terdaftar Koperasi Desa!');
+                alert('Pelanggan ini bukan anggota terdaftar Koperasi!');
                 return;
             }
             isMemberDiscountApplied = !isMemberDiscountApplied;
@@ -435,7 +470,7 @@
                 moneyBox.classList.remove('hidden');
                 changeDisplay.classList.remove('hidden');
                 btnReset.classList.remove('hidden');
-                drawerLabel.innerHTML = `<i class="fa-solid fa-cash-register text-red-500 mr-2"></i>Laci Uang Kasir Koperasi Desa:`;
+                drawerLabel.innerHTML = `<i class="fa-solid fa-cash-register text-red-500 mr-2"></i>Laci Uang Kasir Koperasi:`;
                 submitBtnText.innerText = "Cetak Struk & Selesaikan";
 
                 let cashGiven = 0;
@@ -563,21 +598,21 @@
             
             document.getElementById('modal-stats').classList.remove('hidden');
             document.getElementById('final-score').innerText = `Rp ${totalScore.toLocaleString('id-ID')}`;
-            document.getElementById('final-cust').innerText = `${customerIndex} Warga`;
+            document.getElementById('final-cust').innerText = `${customerIndex} Pelanggan`;
 
             if (totalScore >= TARGET_SALES_GOAL && reputation > 0) {
                 title.innerText = 'TARGET OMSET TERCAPAI!';
                 icon.className = 'fa-solid fa-trophy';
-                sub.innerText = 'Hebat! Kamu berhasil melayani warga dan mencapai Target Omset Kas Koperasi Desa Merah Putih!';
+                sub.innerText = 'Selamat! Kamu berhasil melayani pelanggan dan mencapai Target Omset Kas Koperasi Dash!';
                 confetti({ particleCount: 150, spread: 90, origin: { y: 0.5 } });
             } else if (reputation <= 0) {
                 title.innerText = 'SHIFT GAGAL! REPUTASI HABIS';
                 icon.className = 'fa-solid fa-heart-crack';
-                sub.innerText = 'Banyak warga desa yang kecewa karena pelayanan lambat atau uang kembalian salah.';
+                sub.innerText = 'Banyak pelanggan yang kecewa karena pelayanan lambat atau uang kembalian salah.';
             } else {
                 title.innerText = 'TARGET BELUM TERCAPAI';
                 icon.className = 'fa-solid fa-chart-line-down';
-                sub.innerText = `Antrean warga habis, namun omset kas hanya terkumpul Rp ${totalScore.toLocaleString('id-ID')} dari target Rp 100.000. Coba lagi!`;
+                sub.innerText = `Antrean pelanggan habis, namun omset kas hanya terkumpul Rp ${totalScore.toLocaleString('id-ID')} dari target Rp 100.000. Coba lagi!`;
             }
 
             document.getElementById('modal-btn-text').innerText = 'Mainkan Shift Baru';
