@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Supermarket Dash: Kasir Simulator</title>
+    <title>Koperasi Dash: Kasir Simulator</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -17,27 +17,27 @@
     <header class="bg-slate-800 border-b border-slate-700 px-4 py-3 sticky top-0 z-40 shadow-lg">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 bg-red-600 rounded-xl flex items-center justify-center text-white text-xl font-black shadow-md">
-                    <i class="fa-solid fa-cash-register"></i>
+                <div class="w-10 h-10 bg-emerald-600 rounded-xl flex items-center justify-center text-white text-xl font-black shadow-md">
+                    <i class="fa-solid fa-store"></i>
                 </div>
                 <div>
-                    <h1 class="text-base font-bold text-white tracking-wide">Supermarket Dash</h1>
-                    <p class="text-[11px] text-amber-400 font-medium">Kasir Simulator & Time Management</p>
+                    <h1 class="text-base font-bold text-white tracking-wide">Koperasi Dash</h1>
+                    <p class="text-[11px] text-emerald-400 font-medium">Simulator Kasir & Time Management Koperasi</p>
                 </div>
             </div>
 
             <!-- Score & Stats Bar -->
             <div class="flex items-center space-x-6 text-xs font-bold">
                 <div class="text-right">
-                    <p class="text-[10px] text-slate-400">Total Omset</p>
+                    <p class="text-[10px] text-slate-400">Total Omset Kas</p>
                     <p id="game-score" class="text-emerald-400 text-sm">Rp 0</p>
                 </div>
                 <div class="text-right">
-                    <p class="text-[10px] text-slate-400">Pelanggan Selesai</p>
+                    <p class="text-[10px] text-slate-400">Anggota Selesai</p>
                     <p id="cust-count" class="text-amber-400 text-sm">0 / 8</p>
                 </div>
                 <div class="text-right">
-                    <p class="text-[10px] text-slate-400">Reputasi / Nyawa</p>
+                    <p class="text-[10px] text-slate-400">Reputasi Koperasi</p>
                     <div id="reputation-hearts" class="flex space-x-1 text-red-500 text-xs mt-0.5">
                         <i class="fa-solid fa-heart"></i>
                         <i class="fa-solid fa-heart"></i>
@@ -62,12 +62,15 @@
                             <i class="fa-solid fa-user-ninja"></i>
                         </div>
                         <div>
-                            <h3 id="cust-name" class="font-bold text-white text-base">Pelanggan #1</h3>
+                            <h3 id="cust-name" class="font-bold text-white text-base">Anggota #1</h3>
                             <p id="cust-badge" class="text-[11px] text-amber-400 font-bold flex items-center mt-0.5">
-                                <i class="fa-solid fa-id-card mr-1"></i>Member Alfamart
+                                <i class="fa-solid fa-id-card mr-1"></i>Anggota Koperasi
                             </p>
                         </div>
                     </div>
+                    <span id="cust-trait-badge" class="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-700 text-slate-300">
+                        Normal
+                    </span>
                 </div>
 
                 <!-- Customer Patience Bar -->
@@ -83,15 +86,15 @@
 
                 <!-- Customer Dialogue Bubble -->
                 <div id="cust-dialogue" class="bg-slate-900 border border-slate-700 p-3 rounded-xl text-xs text-slate-300 italic flex items-center space-x-2">
-                    <i class="fa-solid fa-comment-dots text-amber-400 text-sm flex-shrink-0"></i>
-                    <span id="dialogue-text">"Mba, tolong scan barang-barang saya ya!"</span>
+                    <i class="fa-solid fa-comment-dots text-emerald-400 text-sm flex-shrink-0"></i>
+                    <span id="dialogue-text">"Tolong hitungkan barang belanjaan saya ya!"</span>
                 </div>
             </div>
 
             <!-- Queue Counter -->
             <div class="bg-slate-800/80 border border-slate-700 p-4 rounded-2xl flex items-center justify-between text-xs font-bold">
-                <span class="text-slate-400"><i class="fa-solid fa-users text-indigo-400 mr-2"></i>Antrean Dibelakang:</span>
-                <span id="queue-remaining-badge" class="bg-indigo-600/30 text-indigo-300 border border-indigo-500/50 px-3 py-1 rounded-full">7 Orang Menunggu</span>
+                <span class="text-slate-400"><i class="fa-solid fa-users text-emerald-400 mr-2"></i>Antrean Dibelakang:</span>
+                <span id="queue-remaining-badge" class="bg-emerald-600/30 text-emerald-300 border border-emerald-500/50 px-3 py-1 rounded-full">7 Orang Menunggu</span>
             </div>
 
         </div>
@@ -102,8 +105,8 @@
             <!-- Items Conveyor Belt -->
             <div class="space-y-2">
                 <div class="flex justify-between items-center text-xs font-bold border-b border-slate-700 pb-2">
-                    <span class="text-slate-300"><i class="fa-solid fa-barcode text-red-500 mr-2"></i>Barang Belanjaan (Klik untuk Scan)</span>
-                    <span id="scanned-progress" class="text-amber-400">0 / 0 Barcode Ter-scan</span>
+                    <span class="text-slate-300"><i class="fa-solid fa-barcode text-emerald-500 mr-2"></i>Barang Belanjaan (Klik untuk Scan)</span>
+                    <span id="scanned-progress" class="text-amber-400">0 / 0 Ter-scan</span>
                 </div>
 
                 <!-- Conveyor Belt Grid -->
@@ -122,20 +125,20 @@
                         <span id="subtotal-val" class="text-slate-200 font-bold">Rp 0</span>
                     </div>
                     <div class="flex justify-between text-slate-400">
-                        <span>Diskon Member (10%):</span>
+                        <span>Diskon Anggota (10%):</span>
                         <span id="discount-val" class="text-red-400 font-bold">- Rp 0</span>
                     </div>
                     <div class="flex justify-between text-sm font-black text-emerald-400 pt-1 border-t border-slate-800">
-                        <span>TOTAL BELANJA:</span>
+                        <span>TOTAL BAYAR:</span>
                         <span id="total-val">Rp 0</span>
                     </div>
                 </div>
 
                 <!-- POS System Payment Method & Change Screen -->
                 <div class="space-y-2 flex flex-col justify-between">
-                    <button id="btn-member" onclick="toggleMemberDiscount()" class="w-full py-1.5 px-3 bg-slate-800 hover:bg-slate-700 text-amber-400 border border-amber-500/40 rounded-lg font-bold text-xs transition flex items-center justify-between">
-                        <span><i class="fa-solid fa-id-card mr-2"></i>Scan Kartu Member</span>
-                        <span id="member-status-tag" class="text-[10px] bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded">Belum</span>
+                    <button id="btn-member" onclick="toggleMemberDiscount()" class="w-full py-1.5 px-3 bg-slate-800 hover:bg-slate-700 text-emerald-400 border border-emerald-500/40 rounded-lg font-bold text-xs transition flex items-center justify-between">
+                        <span><i class="fa-solid fa-id-card mr-2"></i>Scan Kartu Anggota Koperasi</span>
+                        <span id="member-status-tag" class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded">Belum</span>
                     </button>
 
                     <div class="bg-slate-800/80 p-2.5 rounded-lg border border-slate-700 space-y-1">
@@ -161,11 +164,11 @@
             <!-- Cash Drawer / Payment Controls -->
             <div id="cash-calculator" class="space-y-3 bg-slate-900/50 p-4 rounded-xl border border-slate-700">
                 <div class="flex justify-between items-center text-xs font-bold">
-                    <span id="drawer-label" class="text-slate-300"><i class="fa-solid fa-cash-register text-emerald-500 mr-2"></i>Laci Uang Kasir:</span>
+                    <span id="drawer-label" class="text-slate-300"><i class="fa-solid fa-cash-register text-emerald-500 mr-2"></i>Laci Uang Kasir Koperasi:</span>
                     <span id="change-display-container" class="text-slate-400">Diambil: <strong id="change-given-val" class="text-emerald-400 text-sm">Rp 0</strong></span>
                 </div>
 
-                <!-- Money Denomination Buttons (Koin & Kertas - Terkecil 100 Rupiah) -->
+                <!-- Money Denomination Buttons (Koin & Kertas) -->
                 <div id="money-buttons-box" class="space-y-2">
                     <!-- Koin Pecahan Kecil (100, 200, 500) -->
                     <div class="flex items-center space-x-2">
@@ -210,23 +213,23 @@
     <div id="game-modal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-50 flex items-center justify-center p-4">
         <div class="bg-slate-900 border border-slate-700 max-w-md w-full p-8 rounded-3xl shadow-2xl text-center space-y-6">
             
-            <div class="w-20 h-20 bg-red-600 rounded-3xl flex items-center justify-center text-white text-4xl mx-auto shadow-lg shadow-red-600/30">
-                <i id="modal-icon" class="fa-solid fa-cash-register"></i>
+            <div class="w-20 h-20 bg-emerald-600 rounded-3xl flex items-center justify-center text-white text-4xl mx-auto shadow-lg shadow-emerald-600/30">
+                <i id="modal-icon" class="fa-solid fa-store"></i>
             </div>
 
             <div class="space-y-2">
-                <h2 id="modal-title" class="text-2xl font-black text-white">Supermarket Dash</h2>
+                <h2 id="modal-title" class="text-2xl font-black text-white">Koperasi Dash</h2>
                 <p id="modal-subtitle" class="text-xs text-slate-400 leading-relaxed">
-                    Uji kecepatan dan ketelitianmu melayani pelanggan di kasir minimarket! Scan barang, diskon member, serta proses pembayaran Tunai, QRIS, atau Kartu Debit.
+                    Uji kecepatan dan ketelitianmu melayani anggota Koperasi! Scan barang, proses diskon anggota, serta ambil kembalian uang pecahan pas.
                 </p>
             </div>
 
             <div id="modal-stats" class="hidden bg-slate-800/80 p-4 rounded-2xl border border-slate-700 text-xs space-y-2 text-left">
-                <div class="flex justify-between"><span class="text-slate-400">Total Omset Didapat:</span><span id="final-score" class="font-bold text-emerald-400">Rp 0</span></div>
-                <div class="flex justify-between"><span class="text-slate-400">Pelanggan Terlayani:</span><span id="final-cust" class="font-bold text-amber-400">0 Pelanggan</span></div>
+                <div class="flex justify-between"><span class="text-slate-400">Total Omset Kas:</span><span id="final-score" class="font-bold text-emerald-400">Rp 0</span></div>
+                <div class="flex justify-between"><span class="text-slate-400">Anggota Terlayani:</span><span id="final-cust" class="font-bold text-amber-400">0 Anggota</span></div>
             </div>
 
-            <button onclick="startGame()" class="w-full py-3.5 bg-red-600 hover:bg-red-500 text-white font-black text-sm rounded-2xl shadow-xl transition transform active:scale-95 flex items-center justify-center space-x-2">
+            <button onclick="startGame()" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-black text-sm rounded-2xl shadow-xl transition transform active:scale-95 flex items-center justify-center space-x-2">
                 <i class="fa-solid fa-play"></i>
                 <span id="modal-btn-text">Mulai Permainan</span>
             </button>
@@ -235,7 +238,6 @@
 
     <!-- JAVASCRIPT GAME LOGIC -->
     <script>
-        // Database 25 Produk Real Minimarket (Dibulatkan ke kelipatan Rp 100)
         const ITEM_DATABASE = [
             { name: 'Indomie Goreng Original', price: 3100, icon: 'fa-bowl-food', color: 'bg-red-500' },
             { name: 'Pocari Sweat 500ml', price: 9200, icon: 'fa-bottle-water', color: 'bg-blue-600' },
@@ -249,46 +251,22 @@
             { name: 'Tissue Paseo 250s', price: 18900, icon: 'fa-box-tissue', color: 'bg-pink-400' },
             { name: 'Oreo Vanilla Roll', price: 10200, icon: 'fa-cookie', color: 'bg-blue-700' },
             { name: 'Bear Brand Susu Steril', price: 10500, icon: 'fa-bottle-droplet', color: 'bg-slate-500' },
-            { name: 'Nescafe Can Original', price: 11000, icon: 'fa-mug-saucer', color: 'bg-amber-900' },
-            { name: 'Samyang Spicy Noodle', price: 21500, icon: 'fa-fire', color: 'bg-red-700' },
-            { name: 'Sabun Lifebuoy Red', price: 5200, icon: 'fa-soap', color: 'bg-red-600' },
-            { name: 'Pepsodent Herbal 190g', price: 18500, icon: 'fa-tooth', color: 'bg-emerald-600' },
-            { name: 'Pringles Original 107g', price: 24500, icon: 'fa-box', color: 'bg-red-600' },
-            { name: 'Bango Kecap Manis 135ml', price: 11500, icon: 'fa-bottle-droplet', color: 'bg-amber-950' },
-            { name: 'Gulaku Gula Pasir 1kg', price: 17500, icon: 'fa-box', color: 'bg-emerald-500' },
-            { name: 'Good Day Mochacinno', price: 7500, icon: 'fa-wine-bottle', color: 'bg-red-500' },
-            { name: 'You C1000 Lemon', price: 8500, icon: 'fa-bottle-water', color: 'bg-yellow-500' },
-            { name: 'Yakult Pack (5s)', price: 10800, icon: 'fa-box-tissue', color: 'bg-red-400' },
-            { name: 'Kopiko 78 Cokelat', price: 7000, icon: 'fa-wine-bottle', color: 'bg-amber-800' },
-            { name: 'Shampoo Clear Menthol', price: 29500, icon: 'fa-pump-soap', color: 'bg-blue-700' },
-            { name: 'Rinso Anti Noda 770g', price: 23500, icon: 'fa-box', color: 'bg-emerald-600' }
+            { name: 'Kopi Kapal Api Sachet', price: 14500, icon: 'fa-box', color: 'bg-red-800' },
+            { name: 'Buku Tulis Sidu 38 Lembar', price: 4500, icon: 'fa-book', color: 'bg-blue-500' },
+            { name: 'Pulpen Standard AE7 0.5', price: 2500, icon: 'fa-pen', color: 'bg-black' }
         ];
 
-        // Database 20 Variasi Pelanggan
         const CUSTOMER_PRESETS = [
-            { name: 'Budi Santoso', isMember: true, payMethod: 'Tunai', avatar: 'fa-user-astronaut', color: 'bg-indigo-600' },
-            { name: 'Siti Rahma', isMember: false, payMethod: 'QRIS', avatar: 'fa-user-ninja', color: 'bg-pink-600' },
-            { name: 'Andi Pratama', isMember: true, payMethod: 'Debit', avatar: 'fa-user-tie', color: 'bg-emerald-600' },
-            { name: 'Dewi Lestari', isMember: false, payMethod: 'Tunai', avatar: 'fa-user-nurse', color: 'bg-purple-600' },
-            { name: 'Rangga Wijaya', isMember: true, payMethod: 'QRIS', avatar: 'fa-user-secret', color: 'bg-amber-600' },
-            { name: 'Rina Kusuma', isMember: true, payMethod: 'Tunai', avatar: 'fa-user-graduate', color: 'bg-teal-600' },
-            { name: 'Doni Laksana', isMember: false, payMethod: 'Debit', avatar: 'fa-user-doctor', color: 'bg-cyan-600' },
-            { name: 'Eka Prasetya', isMember: false, payMethod: 'QRIS', avatar: 'fa-user-gear', color: 'bg-orange-600' },
-            { name: 'Fikri Haikal', isMember: true, payMethod: 'Tunai', avatar: 'fa-user-shield', color: 'bg-blue-700' },
-            { name: 'Gita Gutawa', isMember: true, payMethod: 'Debit', avatar: 'fa-user-pen', color: 'bg-rose-600' },
-            { name: 'Hendra Gunawan', isMember: false, payMethod: 'Tunai', avatar: 'fa-user-check', color: 'bg-slate-600' },
-            { name: 'Indah Permata', isMember: true, payMethod: 'QRIS', avatar: 'fa-user-large', color: 'bg-violet-600' },
-            { name: 'Joko Widodo', isMember: false, payMethod: 'Tunai', avatar: 'fa-user', color: 'bg-emerald-700' },
-            { name: 'Kartika Sari', isMember: true, payMethod: 'Debit', avatar: 'fa-user-tag', color: 'bg-red-600' },
-            { name: 'Luki Hermawan', isMember: false, payMethod: 'QRIS', avatar: 'fa-user-clock', color: 'bg-yellow-600' },
-            { name: 'Maya Suprihatin', isMember: true, payMethod: 'Tunai', avatar: 'fa-user-minus', color: 'bg-pink-700' },
-            { name: 'Nugroho Adi', isMember: false, payMethod: 'Tunai', avatar: 'fa-user-lock', color: 'bg-blue-800' },
-            { name: 'Olivia Jensen', isMember: true, payMethod: 'QRIS', avatar: 'fa-user-plus', color: 'bg-purple-700' },
-            { name: 'Pratama Arhan', isMember: false, payMethod: 'Debit', avatar: 'fa-user-gear', color: 'bg-emerald-800' },
-            { name: 'Qory Sandioriva', isMember: true, payMethod: 'Tunai', avatar: 'fa-user-astronaut', color: 'bg-indigo-700' }
+            { name: 'Pak Budi (Pengurus)', isMember: true, payMethod: 'Tunai', trait: 'Impatient', avatar: 'fa-user-tie', color: 'bg-indigo-600' },
+            { name: 'Bu Siti (Karyawan)', isMember: false, payMethod: 'QRIS', trait: 'Normal', avatar: 'fa-user-nurse', color: 'bg-pink-600' },
+            { name: 'Andi (Siswa)', isMember: true, payMethod: 'Tunai', trait: 'Normal', avatar: 'fa-user-graduate', color: 'bg-emerald-600' },
+            { name: 'Dewi (Guru)', isMember: false, payMethod: 'Debit', trait: 'Impatient', avatar: 'fa-user-doctor', color: 'bg-purple-600' },
+            { name: 'Mas Rangga (Staff IT)', isMember: true, payMethod: 'QRIS', trait: 'Normal', avatar: 'fa-user-secret', color: 'bg-amber-600' },
+            { name: 'Pak Hendra (Satpam)', isMember: true, payMethod: 'Tunai', trait: 'Normal', avatar: 'fa-user-shield', color: 'bg-slate-600' },
+            { name: 'Mbak Rina (Magang)', isMember: false, payMethod: 'QRIS', trait: 'Normal', avatar: 'fa-user-pen', color: 'bg-teal-600' },
+            { name: 'Pak Eka (Teknisi)', isMember: true, payMethod: 'Debit', trait: 'Impatient', avatar: 'fa-user-gear', color: 'bg-orange-600' }
         ];
 
-        // Game State Variables
         let totalScore = 0;
         let customerIndex = 0;
         let queueList = [];
@@ -301,15 +279,12 @@
         let targetChange = 0;
         let patienceTimer = null;
         let patiencePct = 100;
-        const TARGET_CUSTOMERS_PER_SHIFT = 8; // 8 pelanggan per sesi game
+        const TARGET_CUSTOMERS_PER_SHIFT = 8;
 
-        // Start Game
         function startGame() {
             totalScore = 0;
             customerIndex = 0;
             reputation = 3;
-            
-            // Acak antrean pelanggan dari database 20 orang
             queueList = [...CUSTOMER_PRESETS].sort(() => 0.5 - Math.random()).slice(0, TARGET_CUSTOMERS_PER_SHIFT);
 
             document.getElementById('game-score').innerText = 'Rp 0';
@@ -320,7 +295,6 @@
             nextCustomer();
         }
 
-        // Load Next Customer
         function nextCustomer() {
             if (customerIndex >= TARGET_CUSTOMERS_PER_SHIFT || reputation <= 0) {
                 endGame();
@@ -335,49 +309,53 @@
 
             currentCustomer = queueList[customerIndex];
             
-            // Randomly select 2 - 5 items
-            const itemQty = Math.floor(Math.random() * 4) + 2;
+            const itemQty = Math.floor(Math.random() * 3) + 2;
             currentItems = [];
             for (let i = 0; i < itemQty; i++) {
                 const randomItem = ITEM_DATABASE[Math.floor(Math.random() * ITEM_DATABASE.length)];
                 currentItems.push({ ...randomItem, scanned: false, id: i });
             }
 
-            // Update UI Customer
             document.getElementById('cust-name').innerText = currentCustomer.name;
             document.getElementById('cust-avatar').className = `w-14 h-14 ${currentCustomer.color} rounded-2xl flex items-center justify-center text-2xl text-white shadow-md border border-white/20`;
             document.getElementById('cust-avatar').innerHTML = `<i class="fa-solid ${currentCustomer.avatar}"></i>`;
             
-            if (currentCustomer.isMember) {
-                document.getElementById('cust-badge').className = "text-[11px] text-amber-400 font-bold flex items-center mt-0.5";
-                document.getElementById('cust-badge').innerHTML = `<i class="fa-solid fa-id-card mr-1"></i>Punya Kartu Member`;
+            const traitBadge = document.getElementById('cust-trait-badge');
+            if (currentCustomer.trait === 'Impatient') {
+                traitBadge.innerText = 'Pemarah (Cepat Kesal)';
+                traitBadge.className = 'text-[10px] font-bold px-2 py-0.5 rounded bg-red-500/20 text-red-300 border border-red-500/40';
             } else {
-                document.getElementById('cust-badge').className = "text-[11px] text-slate-400 font-bold flex items-center mt-0.5";
-                document.getElementById('cust-badge').innerHTML = `<i class="fa-solid fa-user mr-1"></i>Non-Member`;
+                traitBadge.innerText = 'Sabar';
+                traitBadge.className = 'text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
             }
 
-            // Dialogue according to payment method
-            if (currentCustomer.payMethod === 'QRIS') {
-                document.getElementById('dialogue-text').innerText = `"Halo mba/mas, saya bayar pakai QRIS ya!"`;
-            } else if (currentCustomer.payMethod === 'Debit') {
-                document.getElementById('dialogue-text').innerText = `"Saya bayar pakai Kartu Debit/BCA ya!"`;
+            if (currentCustomer.isMember) {
+                document.getElementById('cust-badge').className = "text-[11px] text-emerald-400 font-bold flex items-center mt-0.5";
+                document.getElementById('cust-badge').innerHTML = `<i class="fa-solid fa-id-card mr-1"></i>Anggota Koperasi`;
             } else {
-                document.getElementById('dialogue-text').innerText = `"Tolong hitungkan cepat ya, saya bayar pakai uang tunai."`;
+                document.getElementById('cust-badge').className = "text-[11px] text-slate-400 font-bold flex items-center mt-0.5";
+                document.getElementById('cust-badge').innerHTML = `<i class="fa-solid fa-user mr-1"></i>Non-Anggota`;
+            }
+
+            if (currentCustomer.payMethod === 'QRIS') {
+                document.getElementById('dialogue-text').innerText = `"Saya bayar belanjaan ini pakai QRIS Koperasi ya!"`;
+            } else if (currentCustomer.payMethod === 'Debit') {
+                document.getElementById('dialogue-text').innerText = `"Saya bayar pakai Kartu Debit BCA ya!"`;
+            } else {
+                document.getElementById('dialogue-text').innerText = `"Cepat ya, saya mau bayar pakai uang tunai pas."`;
             }
 
             document.getElementById('queue-remaining-badge').innerText = `${TARGET_CUSTOMERS_PER_SHIFT - customerIndex - 1} Orang Menunggu`;
             document.getElementById('cust-count').innerText = `${customerIndex + 1} / ${TARGET_CUSTOMERS_PER_SHIFT}`;
 
-            // Reset Member Button UI
             document.getElementById('member-status-tag').innerText = 'Belum';
-            document.getElementById('member-status-tag').className = 'text-[10px] bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded';
+            document.getElementById('member-status-tag').className = 'text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded';
 
             renderConveyor();
             calculateBill();
             startPatienceTimer();
         }
 
-        // Render Items Conveyor
         function renderConveyor() {
             const conveyor = document.getElementById('items-conveyor');
             document.getElementById('scanned-progress').innerText = `${scannedItemsCount} / ${currentItems.length} Ter-scan`;
@@ -391,7 +369,6 @@
             `).join('');
         }
 
-        // Scan Single Item
         function scanItem(itemId) {
             const item = currentItems.find(i => i.id === itemId);
             if (item && !item.scanned) {
@@ -402,10 +379,9 @@
             }
         }
 
-        // Toggle Member Discount
         function toggleMemberDiscount() {
             if (!currentCustomer.isMember) {
-                alert('Pelanggan ini tidak memiliki kartu member!');
+                alert('Pelanggan ini bukan anggota terdaftar Koperasi!');
                 return;
             }
             isMemberDiscountApplied = !isMemberDiscountApplied;
@@ -415,20 +391,16 @@
                 tag.className = 'text-[10px] bg-emerald-500 text-white font-bold px-2 py-0.5 rounded';
             } else {
                 tag.innerText = 'Belum';
-                tag.className = 'text-[10px] bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded';
+                tag.className = 'text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded';
             }
             calculateBill();
         }
 
-        // Calculate Bill Totals & Target Change (Pembulatan ke Kelipatan Rp 100)
         function calculateBill() {
             const scannedItems = currentItems.filter(i => i.scanned);
             const rawSubtotal = scannedItems.reduce((sum, i) => sum + i.price, 0);
             
-            // Raw discount 10%
             const rawDiscount = isMemberDiscountApplied ? rawSubtotal * 0.10 : 0;
-            
-            // Pembulatan ke kelipatan Rp 100 terdekat
             const discount = Math.round(rawDiscount / 100) * 100;
             const total = Math.round((rawSubtotal - discount) / 100) * 100;
 
@@ -436,7 +408,6 @@
             document.getElementById('discount-val').innerText = `- Rp ${discount.toLocaleString('id-ID')}`;
             document.getElementById('total-val').innerText = `Rp ${total.toLocaleString('id-ID')}`;
 
-            // Update Payment Method Badge
             const payBadge = document.getElementById('payment-badge');
             payBadge.innerText = currentCustomer.payMethod;
 
@@ -464,7 +435,6 @@
                 document.getElementById('cash-given-val').innerText = `Rp ${cashGiven.toLocaleString('id-ID')}`;
                 document.getElementById('target-change-val').innerText = `Rp ${targetChange.toLocaleString('id-ID')}`;
             } else {
-                // Non-Tunai (QRIS / Debit)
                 payBadge.className = "font-bold text-xs bg-amber-500/20 text-amber-300 border border-amber-500/40 px-2 py-0.5 rounded";
                 moneyBox.classList.add('hidden');
                 changeDisplay.classList.add('hidden');
@@ -481,7 +451,6 @@
             updateChangeUI();
         }
 
-        // Add Change Denominations
         function addChange(amount) {
             givenChange += amount;
             updateChangeUI();
@@ -496,13 +465,13 @@
             document.getElementById('change-given-val').innerText = `Rp ${givenChange.toLocaleString('id-ID')}`;
         }
 
-        // Patience Timer Countdown
         function startPatienceTimer() {
             const bar = document.getElementById('patience-bar');
             const text = document.getElementById('patience-text');
+            const decrement = currentCustomer.trait === 'Impatient' ? 4 : 2; // Impatient reduces 2x faster
 
             patienceTimer = setInterval(() => {
-                patiencePct -= 2;
+                patiencePct -= decrement;
                 bar.style.width = `${patiencePct}%`;
                 text.innerText = `${patiencePct}%`;
 
@@ -518,26 +487,23 @@
                     clearInterval(patienceTimer);
                     reputation--;
                     updateReputationUI();
-                    alert(`Waktu habis! ${currentCustomer.name} kesal dan meninggalkan kasir.`);
+                    alert(`Waktu habis! ${currentCustomer.name} kesal dan meninggalkan kasir Koperasi.`);
                     customerIndex++;
                     nextCustomer();
                 }
             }, 1000);
         }
 
-        // Submit & Verify Transaction
         function submitTransaction() {
-            // Check 1: All items scanned
             if (scannedItemsCount < currentItems.length) {
                 alert('Peringatan: Masih ada barang belanjaan yang belum di-scan!');
                 return;
             }
 
-            // Check 2: Correct change given for Tunai
             if (currentCustomer.payMethod === 'Tunai' && givenChange !== targetChange) {
                 reputation--;
                 updateReputationUI();
-                alert(`Kembalian Salah! Di layar POS tertulis Rp ${targetChange.toLocaleString('id-ID')}, tapi kamu memberikan Rp ${givenChange.toLocaleString('id-ID')}. Reputasi berkurang!`);
+                alert(`Kembalian Salah! Di layar POS tertulis Rp ${targetChange.toLocaleString('id-ID')}, tapi kamu memberikan Rp ${givenChange.toLocaleString('id-ID')}. Reputasi Koperasi berkurang!`);
             } else {
                 const rawSubtotal = currentItems.reduce((sum, i) => sum + i.price, 0);
                 const rawDiscount = isMemberDiscountApplied ? rawSubtotal * 0.10 : 0;
@@ -554,7 +520,6 @@
             nextCustomer();
         }
 
-        // Reputation UI
         function updateReputationUI() {
             const container = document.getElementById('reputation-hearts');
             let heartsHTML = '';
@@ -568,7 +533,6 @@
             container.innerHTML = heartsHTML;
         }
 
-        // End Game Modal
         function endGame() {
             clearInterval(patienceTimer);
             
@@ -579,17 +543,17 @@
             
             document.getElementById('modal-stats').classList.remove('hidden');
             document.getElementById('final-score').innerText = `Rp ${totalScore.toLocaleString('id-ID')}`;
-            document.getElementById('final-cust').innerText = `${customerIndex} Pelanggan`;
+            document.getElementById('final-cust').innerText = `${customerIndex} Anggota`;
 
             if (reputation > 0) {
-                title.innerText = 'Shift Selesai! Perfect!';
+                title.innerText = 'Shift Koperasi Selesai!';
                 icon.className = 'fa-solid fa-trophy';
-                sub.innerText = 'Selamat! Kamu berhasil melayani seluruh antrean pelanggan minimarket dengan cepat dan akurat.';
+                sub.innerText = 'Selamat! Kamu berhasil melayani seluruh antrean anggota Koperasi dengan cepat dan akurat.';
                 confetti({ particleCount: 100, spread: 80, origin: { y: 0.6 } });
             } else {
-                title.innerText = 'Game Over! Toko Tutup';
+                title.innerText = 'Game Over! Koperasi Tutup';
                 icon.className = 'fa-solid fa-heart-crack';
-                sub.innerText = 'Reputasimu habis karena pelanggan terlalu lama menunggu atau kembalian uang tidak sesuai angka POS.';
+                sub.innerText = 'Reputasi Koperasi habis karena pelanggan terlalu lama menunggu atau kembalian salah.';
             }
 
             document.getElementById('modal-btn-text').innerText = 'Main Lagi';
