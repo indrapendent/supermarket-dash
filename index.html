@@ -234,9 +234,10 @@
             </div>
 
             <div id="modal-stats" class="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-xs space-y-2 text-left">
-                <div class="flex justify-between"><span class="text-slate-400">Target Omset Shift Ini:</span><span id="modal-target-goal" class="font-bold text-amber-300">Rp 0</span></div>
+                <div class="flex justify-between"><span class="text-slate-400">Target Minimal Shift Ini:</span><span id="modal-target-goal" class="font-bold text-amber-300">Rp 0</span></div>
                 <div class="flex justify-between"><span class="text-slate-400">Total Antrean Pelanggan:</span><span id="modal-cust-target" class="font-bold text-emerald-400">0 Orang</span></div>
-                <div id="modal-last-score-row" class="hidden flex justify-between border-t border-slate-800 pt-2"><span class="text-slate-400">Omset Terakhir Didapat:</span><span id="final-score" class="font-bold text-emerald-400">Rp 0</span></div>
+                <div id="modal-last-score-row" class="hidden flex justify-between border-t border-slate-800 pt-2"><span class="text-slate-400">Omset Total Diterima:</span><span id="final-score" class="font-bold text-emerald-400">Rp 0</span></div>
+                <div id="modal-shu-row" class="hidden flex justify-between"><span class="text-slate-400">Persentase Pencapaian:</span><span id="final-achievement" class="font-bold text-amber-300">0%</span></div>
             </div>
 
             <button onclick="startGame()" class="w-full py-3.5 bg-red-600 hover:bg-red-500 text-white font-black text-sm rounded-2xl shadow-xl transition transform active:scale-95 flex items-center justify-center space-x-2">
@@ -251,47 +252,34 @@
         let targetSalesGoal = 150000;
         let targetCustomersPerShift = 12;
 
-        // Database Produk Ritel Modern & RTE (FamilyMart Style)
         const ITEM_DATABASE = [
-            // Kopi & Cafe
             { name: 'Ice Kopi Susu Aren', price: 18000, icon: 'fa-mug-saucer', color: 'bg-amber-800' },
             { name: 'Ice Americano Coffee', price: 15000, icon: 'fa-mug-saucer', color: 'bg-amber-950' },
             { name: 'Matcha Green Tea Latte', price: 20000, icon: 'fa-glass-water', color: 'bg-emerald-700' },
             { name: 'Chocolate Ice Blend', price: 18000, icon: 'fa-glass-water', color: 'bg-amber-900' },
-
-            // Ready to Eat (RTE) / Fast Food
             { name: 'Fried Chicken + Nasi', price: 22000, icon: 'fa-drumstick-bite', color: 'bg-orange-600' },
             { name: 'Oden Original (3 Skewer)', price: 15000, icon: 'fa-utensils', color: 'bg-yellow-600' },
             { name: 'Spicy Oden Seafood Bowl', price: 18000, icon: 'fa-fire', color: 'bg-red-600' },
             { name: 'Sosis Kanzler Singel Keju', price: 9000, icon: 'fa-hotdog', color: 'bg-red-700' },
             { name: 'Bakso Kanzler Hot Spiced', price: 9000, icon: 'fa-circle-dot', color: 'bg-red-800' },
             { name: 'Hotdog Beef Cheese', price: 16000, icon: 'fa-hotdog', color: 'bg-amber-700' },
-
-            // Frozen Food & Ice Cream
             { name: 'Fiesta Chicken Nugget 250g', price: 28500, icon: 'fa-box', color: 'bg-yellow-500' },
             { name: 'CEDEA Fish Dumpling Cheese', price: 18500, icon: 'fa-box', color: 'bg-amber-600' },
             { name: 'Es Krim Soft Serve Vanilla', price: 8000, icon: 'fa-ice-cream', color: 'bg-pink-500' },
-
-            // Snack & Biscuit
             { name: 'Pringles Potato Chips 107g', price: 24500, icon: 'fa-box', color: 'bg-red-600' },
             { name: 'Chitato Sapi Panggang 68g', price: 12500, icon: 'fa-cookie-bite', color: 'bg-orange-600' },
             { name: 'Silverqueen Milk Choco 58g', price: 16500, icon: 'fa-candy-cane', color: 'bg-amber-800' },
             { name: 'Oreo Vanilla Roll', price: 10200, icon: 'fa-cookie', color: 'bg-blue-700' },
-
-            // Minuman Botol & Kemasan
             { name: 'Pocari Sweat Botol 500ml', price: 9200, icon: 'fa-bottle-water', color: 'bg-blue-600' },
             { name: 'Teh Pucuk Harum 350ml', price: 4000, icon: 'fa-wine-bottle', color: 'bg-emerald-600' },
             { name: 'Ultra Milk Cokelat 250ml', price: 7200, icon: 'fa-box-tissue', color: 'bg-amber-700' },
             { name: 'Aqua Air Mineral 600ml', price: 3800, icon: 'fa-bottle-water', color: 'bg-blue-400' },
-
-            // Sembako & Kebutuhan
             { name: 'Indomie Goreng Original', price: 3100, icon: 'fa-bowl-food', color: 'bg-red-500' },
             { name: 'Minyak Goreng Refill 2L', price: 38500, icon: 'fa-bottle-droplet', color: 'bg-yellow-500' },
             { name: 'Beras Premium 5kg', price: 74500, icon: 'fa-box', color: 'bg-emerald-700' },
             { name: 'Tissue Paseo Soft Pack', price: 18900, icon: 'fa-box-tissue', color: 'bg-pink-400' }
         ];
 
-        // Database 40 Variasi Pelanggan
         const CUSTOMER_PRESETS = [
             { name: 'Pak Budi (Manager)', isMember: true, payMethod: 'Tunai', trait: 'Impatient', avatar: 'fa-user-tie', color: 'bg-red-600' },
             { name: 'Siti Rahma (Staff)', isMember: false, payMethod: 'QRIS', trait: 'Normal', avatar: 'fa-user-nurse', color: 'bg-pink-600' },
@@ -333,11 +321,11 @@
             customerIndex = 0;
             reputation = 3;
 
-            // DYNAMIC TARGET SALES: Acak antara Rp 120.000 - Rp 250.000 (kelipatan 10.000)
-            targetSalesGoal = (Math.floor(Math.random() * 14) + 12) * 10000;
+            // Target Sales: Rp 120.000 - Rp 220.000
+            targetSalesGoal = (Math.floor(Math.random() * 11) + 12) * 10000;
             
-            // DYNAMIC CUSTOMER COUNT: Acak antara 12 - 16 pelanggan
-            targetCustomersPerShift = Math.floor(Math.random() * 5) + 12;
+            // Customer Count: 12 - 15 Pelanggan
+            targetCustomersPerShift = Math.floor(Math.random() * 4) + 12;
 
             queueList = [...CUSTOMER_PRESETS].sort(() => 0.5 - Math.random()).slice(0, targetCustomersPerShift);
 
@@ -351,7 +339,8 @@
         }
 
         function nextCustomer() {
-            if (totalScore >= targetSalesGoal || customerIndex >= targetCustomersPerShift || reputation <= 0) {
+            // Permainan hanya berhenti jika antrean HABIS atau NYAWA HABIS
+            if (customerIndex >= targetCustomersPerShift || reputation <= 0) {
                 endGame();
                 return;
             }
@@ -364,7 +353,6 @@
 
             currentCustomer = queueList[customerIndex];
             
-            // Randomly select 2 - 5 items
             const itemQty = Math.floor(Math.random() * 4) + 2;
             currentItems = [];
             for (let i = 0; i < itemQty; i++) {
@@ -577,8 +565,8 @@
         }
 
         function updateTargetProgressUI() {
-            const pct = Math.min(100, Math.round((totalScore / targetSalesGoal) * 100));
-            document.getElementById('target-progress-bar').style.width = `${pct}%`;
+            const pct = Math.round((totalScore / targetSalesGoal) * 100);
+            document.getElementById('target-progress-bar').style.width = `${Math.min(100, pct)}%`;
             document.getElementById('target-percent-text').innerText = `${pct}% Target Tercapai`;
         }
 
@@ -604,15 +592,25 @@
             const sub = document.getElementById('modal-subtitle');
             
             document.getElementById('modal-last-score-row').classList.remove('hidden');
+            document.getElementById('modal-shu-row').classList.remove('hidden');
+            
+            const pctAchievement = Math.round((totalScore / targetSalesGoal) * 100);
+
             document.getElementById('final-score').innerText = `Rp ${totalScore.toLocaleString('id-ID')}`;
+            document.getElementById('final-achievement').innerText = `${pctAchievement}% (${pctAchievement >= 100 ? 'SUKSES' : 'GAGAL'})`;
             
             document.getElementById('modal-target-goal').innerText = `Rp ${targetSalesGoal.toLocaleString('id-ID')}`;
             document.getElementById('modal-cust-target').innerText = `${customerIndex} / ${targetCustomersPerShift} Pelanggan`;
 
             if (totalScore >= targetSalesGoal && reputation > 0) {
-                title.innerText = 'TARGET OMSET TERCAPAI!';
+                if (pctAchievement > 120) {
+                    title.innerText = 'SUPER OVERACHIEVER! SHU MELIMPAH!';
+                    sub.innerText = `Luar biasa! Kamu tidak hanya mencapai target, tetapi berhasil melayani seluruh sisa antrean hingga omset mencapai ${pctAchievement}%!`;
+                } else {
+                    title.innerText = 'TARGET SHIFT TERCAPAI!';
+                    sub.innerText = 'Selamat! Kamu berhasil melayani pelanggan Koperasi Dash dan melampaui Target Omset Kas!';
+                }
                 icon.className = 'fa-solid fa-trophy';
-                sub.innerText = 'Selamat! Kamu berhasil melayani pelanggan dan mencapai Target Omset Koperasi Dash!';
                 confetti({ particleCount: 150, spread: 90, origin: { y: 0.5 } });
             } else if (reputation <= 0) {
                 title.innerText = 'SHIFT GAGAL! REPUTASI HABIS';
@@ -621,7 +619,7 @@
             } else {
                 title.innerText = 'TARGET BELUM TERCAPAI';
                 icon.className = 'fa-solid fa-chart-line-down';
-                sub.innerText = `Antrean pelanggan habis, namun omset kas hanya terkumpul Rp ${totalScore.toLocaleString('id-ID')} dari target Rp ${targetSalesGoal.toLocaleString('id-ID')}. Coba lagi!`;
+                sub.innerText = `Antrean pelanggan habis, namun omset kas hanya terkumpul Rp ${totalScore.toLocaleString('id-ID')} dari target minimal Rp ${targetSalesGoal.toLocaleString('id-ID')} (${pctAchievement}%). Coba lagi!`;
             }
 
             document.getElementById('modal-btn-text').innerText = 'Mainkan Shift Baru';
