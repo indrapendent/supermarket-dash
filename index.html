@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Koperasi Dash - Kasir Simulator & Time Management</title>
-    <!-- Tailwind CSS CDN -->
+  
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
+  
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Canvas Confetti -->
+ 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body class="bg-slate-950 font-sans text-slate-100 min-h-screen flex flex-col justify-between">
 
-    <!-- Top Navigation Header (TEMA MERAH PUTIH) -->
+ 
     <header class="bg-red-700 border-b-4 border-white px-4 py-3 sticky top-0 z-40 shadow-xl">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-3">
@@ -26,7 +26,7 @@
                 </div>
             </div>
 
-            <!-- Score & Target Sales Bar -->
+            
             <div class="flex items-center space-x-6 text-xs font-bold">
                 <!-- Target Sales Progress -->
                 <div class="text-right min-w-[140px]">
@@ -57,13 +57,12 @@
         </div>
     </header>
 
-    <!-- MAIN GAME BOARD -->
+
     <main class="max-w-6xl mx-auto w-full p-4 flex-1 grid grid-cols-1 lg:grid-cols-3 gap-6 my-auto">
 
-        <!-- Left: Customer Queue & Active Customer (1 Col) -->
+        
         <div class="space-y-4 flex flex-col justify-between">
-            
-            <!-- Customer Card -->
+
             <div class="bg-slate-900 border-2 border-red-600/40 rounded-2xl p-5 shadow-2xl space-y-4 relative overflow-hidden">
                 <div class="flex justify-between items-start">
                     <div class="flex items-center space-x-3">
@@ -71,7 +70,7 @@
                             <i class="fa-solid fa-user"></i>
                         </div>
                         <div>
-                            <!-- Nama Pelanggan Asli (Tanpa Jabatan) -->
+                          
                             <h3 id="cust-name" class="font-bold text-white text-base">Budi Santoso</h3>
                             <p id="cust-badge" class="text-[11px] text-amber-400 font-bold flex items-center mt-0.5">
                                 <i class="fa-solid fa-id-card mr-1"></i>Anggota Koperasi
@@ -83,7 +82,7 @@
                     </span>
                 </div>
 
-                <!-- Customer Patience Bar -->
+             
                 <div class="space-y-1">
                     <div class="flex justify-between text-[11px] font-bold">
                         <span class="text-slate-400">Tingkat Kesabaran Pelanggan</span>
@@ -94,7 +93,7 @@
                     </div>
                 </div>
 
-                <!-- Customer Dialogue Bubble -->
+              
                 <div id="cust-dialogue" class="bg-slate-950 border border-slate-800 p-3 rounded-xl text-xs text-slate-300 italic flex items-center space-x-2">
                     <i class="fa-solid fa-comment-dots text-red-500 text-sm flex-shrink-0"></i>
                     <span id="dialogue-text">"Pak/Mba kasir, tolong hitungkan belanjaan saya ya!"</span>
@@ -112,20 +111,20 @@
         <!-- Middle & Right: Cashier Workstation (2 Cols) -->
         <div class="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl flex flex-col justify-between space-y-5">
             
-            <!-- Items Conveyor Belt -->
+           
             <div class="space-y-2">
                 <div class="flex justify-between items-center text-xs font-bold border-b border-slate-800 pb-2">
                     <span class="text-slate-300"><i class="fa-solid fa-barcode text-red-500 mr-2"></i>Barang Belanjaan (Klik untuk Scan)</span>
                     <span id="scanned-progress" class="text-amber-400">0 / 0 Ter-scan</span>
                 </div>
 
-                <!-- Conveyor Belt Grid -->
+           
                 <div id="items-conveyor" class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-slate-950 p-3 rounded-xl border border-slate-800 min-h-[120px]">
                     <!-- Items Populated by JS -->
                 </div>
             </div>
 
-            <!-- Billing Calculation Screen (SISTEM POS AUTOMATIC DISPLAY) -->
+           
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs">
                 
                 <!-- Bill Details -->
@@ -144,7 +143,7 @@
                     </div>
                 </div>
 
-                <!-- POS System Payment Method & Change Screen -->
+               
                 <div class="space-y-2 flex flex-col justify-between">
                     <button id="btn-member" onclick="toggleMemberDiscount()" class="w-full py-1.5 px-3 bg-slate-900 hover:bg-slate-800 text-red-400 border border-red-500/40 rounded-lg font-bold text-xs transition flex items-center justify-between">
                         <span><i class="fa-solid fa-id-card mr-2"></i>Scan Kartu Anggota</span>
@@ -171,7 +170,7 @@
 
             </div>
 
-            <!-- Cash Drawer / Payment Controls -->
+        
             <div id="cash-calculator" class="space-y-3 bg-slate-950/60 p-4 rounded-xl border border-slate-800">
                 <div class="flex justify-between items-center text-xs font-bold">
                     <span id="drawer-label" class="text-slate-300"><i class="fa-solid fa-cash-register text-red-500 mr-2"></i>Laci Uang Kasir Koperasi:</span>
@@ -219,7 +218,6 @@
 
     </main>
 
-    <!-- START / GAME OVER OVERLAY MODAL -->
     <div id="game-modal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-50 flex items-center justify-center p-4">
         <div class="bg-slate-900 border-2 border-red-600 max-w-md w-full p-8 rounded-3xl shadow-2xl text-center space-y-6">
             
@@ -248,7 +246,6 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT GAME LOGIC -->
     <script>
         let targetSalesGoal = 150000;
         let targetCustomersPerShift = 12;
@@ -627,5 +624,12 @@
             modal.classList.remove('hidden');
         }
     </script>
+    <footer class="bg-slate-900 border-t border-slate-800 py-3 text-center text-xs text-slate-400">
+        <p class="flex items-center justify-center space-x-1 font-medium">
+            <span>Made with</span>
+            <i class="fa-solid fa-heart text-red-500 animate-pulse"></i>
+            <span>by <strong class="text-white hover:text-red-400 transition cursor-pointer">indrapendent</strong></span>
+        </p>
+    </footer>
 </body>
 </html>
